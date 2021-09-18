@@ -10,7 +10,7 @@ app = Flask(__name__, static_folder ='react-flask-app/build', static_url_path=''
 cors = CORS(app)
 
 CONNECTION_STRING = 'mongodb+srv://Billy:billypassword@cluster0.d2o1j.mongodb.net/mydb?retryWrites=true&w=majority'
-client = pymongo.MongoClient(CONNECTION_STRING)
+client = pymongo.MongoClient(CONNECTION_STRING, connect=False)
 db = client.get_database('mydb')
 colll = pymongo.collection.Collection(db, 'people')
 
