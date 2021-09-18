@@ -21,36 +21,37 @@ const Credentials = ({notEntered, setnotEntered}) => {
         setnotEntered(!notEntered)
     }
     return (
-        <form onSubmit={(onSubmit)}>
-            <div className='form-control'>
-                <label>Name</label>
-                <input 
-                    type='text' 
-                    placeholder='Name' 
-                    value={name} 
-                    onChange={(e) => setName(e.target.value)} 
-                />
-            </div>
-            <div className='form-control'>
-                <label>Email</label>
-                <input 
-                    type='text' 
-                    placeholder='Email' 
-                    value={email} 
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-            </div>
-            <div className='form-control form-control-check'>
-                <label>Remember me</label>
-                <input 
-                    type='checkbox' 
-                    checked = {remember}
-                    value={remember} 
-                    onChange={(e) => setRemember(e.currentTarget.checked)}
-                />
-            </div>
-            <input type='submit' value='Sign up' className='btn btn-block' />
-        </form>
+        <div className="cred-container">
+            <form onSubmit={(onSubmit)}>
+                <div className='form-control'>
+                    <input 
+                        type='text' 
+                        placeholder='Name' 
+                        value={name} 
+                        onChange={(e) => setName(e.target.value)} 
+                    />
+                </div>
+                <div className='form-control'>
+                    <input 
+                        type='text' 
+                        placeholder='Email' 
+                        value={email} 
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                </div>
+                <div className='form-control-check'>
+                    
+                    <input 
+                        type='checkbox' 
+                        checked = {remember}
+                        value={remember} 
+                        onChange={(e) => setRemember(e.currentTarget.checked)}
+                    /><label>Remember me</label>
+                </div>
+                <input type='submit' value='Sign up' className='btn btn-block' />
+            </form>
+        </div>
+        
     )
 }
 

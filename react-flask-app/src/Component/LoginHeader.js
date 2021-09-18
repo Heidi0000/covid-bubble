@@ -4,9 +4,9 @@ import { useState } from "react"
 const LoginHeader = () => {
     const [notEntered, setnotEntered] = useState(true)
     return (
-        <div>
+        <div className="login-container">
             {notEntered ? 
-            <div>
+            <div className="signup-header">
                 <h1>Create account</h1>
                 <h2>Already have an account? Sign in</h2>
             </div> 
