@@ -21,7 +21,7 @@ git push origin main
 
 ## Running the server locally
 
-To run the server locally, use the heroku command:
+To run the server locally, use the heroku command IN THE PIPENV SHELL:
 ```
 heroku local web -f Procfile.windows
 ```
