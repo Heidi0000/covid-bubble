@@ -47,7 +47,7 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 40rem;
-  height: 30rem;
+  height: 33rem;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 
 }
@@ -104,9 +104,9 @@ body {
 
 .form-control input {
   width: 57%;
-  height: 45px;
+  height: 43px;
   /* margin: 5px; */
-  margin-top: 20px;
+  margin-top: 17px;
   padding: 3px 7px;
   font-size: 17px;
   background-color: rgb(245, 245, 245);

@@ -6,12 +6,13 @@ const {REACT_APP_TEST} = process.env;
 const Credentials = ({notEntered, setnotEntered}) => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
     const [remember, setRemember] = useState(false)
 
     const onSubmit = (e) => {
         e.preventDefault()
-        console.log(name,email,remember)
-        const credentials = {name, email}
+        console.log(name,email,password,remember)
+        const credentials = {name, email, password}
         fetch(`${process.env.REACT_APP_TEST}/signup`,{
             method: 'POST',
             headers: {"Content-Type": "application/json"},
@@ -37,6 +38,14 @@ const Credentials = ({notEntered, setnotEntered}) => {
                         placeholder='Email' 
                         value={email} 
                         onChange={(e) => setEmail(e.target.value)}
+                    />
+                </div>
+                <div className='form-control'>
+                    <input 
+                        type='text' 
+                        placeholder='Password' 
+                        value={password} 
+                        onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
                 <div className='form-control-check'>
