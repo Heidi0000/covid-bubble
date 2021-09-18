@@ -1,4 +1,5 @@
 import Credentials from "./Credentials"
+import Login from "./Login"
 import { useState } from "react"
 
 const LoginHeader = () => {
@@ -11,16 +12,18 @@ const LoginHeader = () => {
     return (
         <div className="login-container">
 
-            {notEntered ?
-                (signIn ? 
-                <h1>sign in please</h1> 
+            {notEntered 
+            ?
+                (signIn 
+                ? 
+                    <Login />
                 : 
-                <div className="signup-header">
-                    <h1>Create account</h1>
-                    <h2>Already have an account? </h2> <h2 onClick={onClick} style={{cursor: 'pointer'}}>Sign in</h2>
-                    <Credentials notEntered={notEntered} setnotEntered={setnotEntered}/>
-                </div>)
-                :
+                    <div className="signup-header">
+                        <h1>Create account</h1>
+                        <h2>Already have an account? </h2> <h2 onClick={onClick} style={{cursor: 'pointer', color:'lightblue'}}>Sign in</h2>
+                        <Credentials notEntered={notEntered} setnotEntered={setnotEntered}/>
+                    </div>)
+            :
                 <h1>Successfully entered</h1>
             }
         </div>
