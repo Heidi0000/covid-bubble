@@ -31,7 +31,7 @@ const LoginHeader = ({signIn,setSignIn}) => {
                 :
                 <div >
                     <h1 className="add-friends-header">Add a maximum of 4 people to your Covid-19 social bubble</h1>
-                    <AddFriend onAdd={addFriend} />
+                    <AddFriend onAdd={addFriend} setSignIn={setSignIn}/>
                 </div>
             }
         </div>
