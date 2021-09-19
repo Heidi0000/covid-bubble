@@ -2,21 +2,21 @@ import Credentials from "./Credentials"
 import Login from "./Login"
 import { useState } from "react"
 
-const LoginHeader = () => {
+const LoginHeader = ({signIn,setSignIn}) => {
     const [notEntered, setnotEntered] = useState(true)
-    const [signIn, setSignIn] = useState(false)
+    const [signIned, setSignIned] = useState(false)
 
     const onClick = () => {
-        setSignIn(true)
+        setSignIned(true)
     }
     return (
         <div className="login-container">
 
             {notEntered 
             ?
-                (signIn 
+                (signIned 
                 ? 
-                    <Login />
+                    <Login signIn={signIn} setSignIn={setSignIn}/>
                 : 
                     <div className="signup-header">
                         <h1>Create account</h1>

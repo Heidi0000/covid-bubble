@@ -1,13 +1,27 @@
 import { useState } from "react"
+import { Redirect } from "react-router-dom"
 
-const Login = () => {
+const Login = ({signIn,setSignIn}) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [remember, setRemember] = useState(false)
 
     const onSubmit = (e) => {
         e.preventDefault()
-        console.log(email,password,remember)        
+        const credentials = {email, password}
+        fetch(`${process.env.REACT_APP_TEST}/signin`,{
+            method: 'POST',
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(credentials)
+        }).then(response => {
+            if (response.status===201){
+                alert('Incorrect Email or Password')
+            }
+            else{
+                setSignIn(true)
+            }
+            response.json()
+        }).then(data => console.log(data))
     }
 
     return (
