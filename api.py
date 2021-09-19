@@ -74,8 +74,7 @@ def signOut():
 @cross_origin(supports_credentials=True)
 @login_required
 def mainpage():
-    print(f"{session} here3 ", file=sys.stderr)
-    return send_from_directory(app.static_folder, 'index.html')
+    return ('',204)
 
 @app.route('/mainpage/session',methods=['GET'])
 @cross_origin(supports_credentials=True)
@@ -109,6 +108,7 @@ def getsession():
 @app.route('/')
 @cross_origin()
 def serve():
+    USER.clear()
     return send_from_directory(app.static_folder, 'index.html')
 
 
