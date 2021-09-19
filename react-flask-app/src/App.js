@@ -3,14 +3,16 @@ import './App.css';
 import Header from './Component/Header'
 import Tasks from './Component/Tasks'
 import AddTask from './Component/AddTask'
-import LoginHeader from './Component/LoginHeader'
+import LoginHeaderWrapper from './Component/LoginHeaderWrapper';
 import { useState } from "react"
-
+import { BrowserRouter as Router, Redirect} from 'react-router-dom'
+import { Route, Switch} from 'react-router-dom'
+import MainPage from './Component/MainPage';
 //import { useState, useEffect } from 'react';
 
 import {Deploy} from './Component/Deploy/Deploy'
 function App() {
-  const [signUp, setSignUp] = useState(false)
+  const [signIn, setSignIn] = useState(false)
   // const [showAddTask,setShowAddTask] = useState(false)
   // const [tasks,setTasks] = useState([
   //     {
@@ -54,17 +56,21 @@ function App() {
   // }
   
   return (
-    <div className = "container">
-      <div className = "loginBox">
-        <LoginHeader />
+    <Switch>
+      <div className = "container">
+        <div className = "content-wrapper">
+
+          <Route exact path="/" component={() => (<LoginHeaderWrapper signIn={signIn} setSignIn={setSignIn} />)}/>
+          <Route exact path="/mainpage" component={MainPage}/>
+        </div>
+        {/* <Header onAdd={() => setShowAddTask(!showAddTask)} showAdd = {showAddTask}/>
+        {showAddTask && <AddTask onAdd={addTask}/>}
+        {tasks.length > 0 ? <Tasks tasks ={tasks} onDelete={deleteTask} onToggle={toggleReminder}/> 
+        : (
+          'No Tasks to Show'
+          )} */}
       </div>
-      {/* <Header onAdd={() => setShowAddTask(!showAddTask)} showAdd = {showAddTask}/>
-      {showAddTask && <AddTask onAdd={addTask}/>}
-      {tasks.length > 0 ? <Tasks tasks ={tasks} onDelete={deleteTask} onToggle={toggleReminder}/> 
-      : (
-        'No Tasks to Show'
-        )} */}
-    </div>
+    </Switch>
   )
   // const [state, setState] = useState({})
 
