@@ -11,17 +11,18 @@ class User:
 
     def signIn(self, db):
         userData = json.loads(request.get_data().decode('utf-8'))
-        
+        print(userData, file=sys.stderr)
         result = db.db.collection.find_one({"email":userData["email"]})
+        print(result, file=sys.stderr)
         if result is None:
             print("signin failed", file=sys.stderr)
             return jsonify("failed user"), 201
         else:
-            user = result
-        print("sign yay", file=sys.stderr)
-
-        print(user, file=sys.stderr)
-        return self.startSession(user)
+            if((userData["password"] != result["password"])):
+                print("signin failed", file=sys.stderr)
+                return jsonify("failed user"), 201
+        print(result, file=sys.stderr)
+        return self.startSession(result)
 
     def signOut(self):
         session.clear()
