@@ -7,6 +7,7 @@ from flask import Flask, request, session, redirect, render_template
 from flask.helpers import send_from_directory
 from flask_pymongo import pymongo
 from functools import wraps
+from bson.json_util import dumps,loads
 
 # Decorator
 
@@ -52,9 +53,8 @@ def signUp():
     userData = json.loads(request.get_data().decode('utf-8'))
     db.db.collection.insert_one(userData)
 
-    User().signIn(db)
-    x =  '{ "name":"signup"}'
-    y = json.loads(x)
+    User().signIn(db,USER)
+    y = USER
     return y
 
 @app.route('/signin', methods = ['POST'])
@@ -85,22 +85,20 @@ def sessionReturn():
 
 @app.route('/addfriend', methods = ['POST'])
 @cross_origin()
+@login_required
 def addFriend():
-
-    #should be logged in
-    if session.get('logged_in'):  
-        print("loggedin", file=sys.stderr)
-        
-
-    else:
-        print("not logged in :( ", file=sys.stderr)
-        friends = json.loads(request.get_data().decode('utf-8'))
-        db.db.collection.insert_one(friends)
     friends = json.loads(request.get_data().decode('utf-8'))
+    friend_arr = []
+    for friend in friends:
+        friend_arr.append(friends[friend])
     print(type(friends), file=sys.stderr)    
-    print(friends, file=sys.stderr)
-
-
+    print(friend_arr, file=sys.stderr)
+    
+    filter = {"email" : USER['user']["email"]}
+    friends_to_add = {"$set": { 'friends' : friend_arr}}
+    db.db.collection.update_one(filter, friends_to_add)
+    # result = db.db.collection.find_one({"email":USER['user']["email"]})
+    USER['user'] = json.loads(dumps(db.db.collection.find_one(filter)))
     x =  '{ "name":"addfriend"}'
     y = json.loads(x)
     return y
@@ -112,7 +110,7 @@ def setsession():
 
 @app.route('/getsession')
 def getsession():
-    print(f"{session} here3 ", file=sys.stderr)
+    print(f"{USER} here3 ", file=sys.stderr)
     return "session"
 
 

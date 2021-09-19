@@ -12,8 +12,10 @@ const AddFriend = ({onAdd, setSignIn}) => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        console.log(friendName1, friendName2, friendName3, friendName4)
+
         const friends = {friendName1, friendName2, friendName3, friendName4}
+        console.log(friends)
+
 
         
         fetch(`${process.env.REACT_APP_TEST}/addfriend`,{
