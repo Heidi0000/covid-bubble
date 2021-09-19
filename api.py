@@ -9,23 +9,27 @@ from flask_pymongo import pymongo
 from functools import wraps
 
 # Decorator
-def login_required(f):
-    @wraps(f)
-    def wrap(*args, **kwargs):
-        if 'logged_in' in session:
-            return f(*args,**kwargs)
-        else:
-            return redirect('/')
-    return wrap
+
 
 app = Flask(__name__, static_folder ='react-flask-app/build', static_url_path='')
-app.secret_key = b'9\x9e\x0e\xa34\x8d.Q\xec\x01\xaf\xaeLh\x9c\xe8' 
+app.secret_key = "nowayitsbecauseofthekey"
+app.config.update(SESSION_COOKIE_SAMESITE="None", SESSION_COOKIE_SECURE=True)
 cors = CORS(app)
 
 CONNECTION_STRING = 'mongodb+srv://Billy:billypassword@cluster0.d2o1j.mongodb.net/mydb?retryWrites=true&w=majority'
 client = pymongo.MongoClient(CONNECTION_STRING, connect=False)
 db = client.get_database('mydb')
 colll = pymongo.collection.Collection(db, 'people')
+USER = {}
+
+def login_required(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in USER:
+            return f(*args,**kwargs)
+        else:
+            return redirect('/')
+    return wrap
 
 from user.models import User
 
@@ -56,28 +60,28 @@ def signUp():
 @app.route('/signin', methods = ['POST'])
 @cross_origin()
 def signIn():
-    return User().signIn(db)
+    save = User().signIn(db, USER)
+    print(f"{session} here6 ", file=sys.stderr)
+    return save
 
 
 @app.route('/signout')
 @cross_origin()
 def signOut():
-    return User().signOut()
+    return User().signOut(USER)
 
 
 @app.route('/mainpage',methods=['GET'])
-@cross_origin()
+@cross_origin(supports_credentials=True)
 @login_required
 def mainpage():
-    print(f"{session} here3 ", file=sys.stderr)
-    return send_from_directory(app.static_folder, 'index.html')
+    return ('',204)
 
 @app.route('/mainpage/session',methods=['GET'])
-@cross_origin()
-@login_required
+@cross_origin(supports_credentials=True)
 def sessionReturn():
-    print(f"{session} here ", file=sys.stderr)
-    return session['user']
+    print(f"{USER} here ", file=sys.stderr)
+    return USER['user']
 
 @app.route('/addfriend', methods = ['POST'])
 @cross_origin()
@@ -101,10 +105,21 @@ def addFriend():
     y = json.loads(x)
     return y
 
+@app.route('/setsession')
+def setsession():
+    session['Username'] = 'Test'
+    return f"Session set!"
+
+@app.route('/getsession')
+def getsession():
+    print(f"{session} here3 ", file=sys.stderr)
+    return "session"
+
 
 @app.route('/')
 @cross_origin()
 def serve():
+    USER.clear()
     return send_from_directory(app.static_folder, 'index.html')
 
 
