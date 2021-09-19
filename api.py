@@ -59,15 +59,12 @@ def signIn():
     return User().signIn(db)
 
 
-<<<<<<< Updated upstream
 @app.route('/signout')
 @cross_origin()
 def signOut():
     return User().signOut()
 
 
-=======
->>>>>>> Stashed changes
 @app.route('/mainpage',methods=['GET'])
 @cross_origin()
 @login_required
@@ -75,15 +72,12 @@ def mainpage():
     print(f"{session} here3 ", file=sys.stderr)
     return send_from_directory(app.static_folder, 'index.html')
 
-<<<<<<< Updated upstream
 @app.route('/mainpage/session',methods=['GET'])
 @cross_origin()
 @login_required
 def sessionReturn():
     print(f"{session} here ", file=sys.stderr)
     return session['user']
-=======
->>>>>>> Stashed changes
 
 @app.route('/addfriend', methods = ['POST'])
 @cross_origin()
