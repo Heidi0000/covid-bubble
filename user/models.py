@@ -16,9 +16,12 @@ class User:
         
         result = db.db.collection.find_one({"email":userData["email"]})
         if result is None:
+            print("signin failed", file=sys.stderr)
             return jsonify("failed user"), 201
         else:
             user = result
+        print("sign yay", file=sys.stderr)
+
         print(user, file=sys.stderr)
         return self.startSession(user)
 

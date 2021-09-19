@@ -48,7 +48,8 @@ def signUp():
     userData = json.loads(request.get_data().decode('utf-8'))
     db.db.collection.insert_one(userData)
 
-    x =  '{ "name":"John", "age":30, "city":"New York"}'
+    User().signIn(db)
+    x =  '{ "name":"signup"}'
     y = json.loads(x)
     return y
 
@@ -58,12 +59,15 @@ def signIn():
     return User().signIn(db)
 
 
+<<<<<<< Updated upstream
 @app.route('/signout')
 @cross_origin()
 def signOut():
     return User().signOut()
 
 
+=======
+>>>>>>> Stashed changes
 @app.route('/mainpage',methods=['GET'])
 @cross_origin()
 @login_required
@@ -71,22 +75,35 @@ def mainpage():
     print(f"{session} here3 ", file=sys.stderr)
     return send_from_directory(app.static_folder, 'index.html')
 
+<<<<<<< Updated upstream
 @app.route('/mainpage/session',methods=['GET'])
 @cross_origin()
 @login_required
 def sessionReturn():
     print(f"{session} here ", file=sys.stderr)
     return session['user']
+=======
+>>>>>>> Stashed changes
 
 @app.route('/addfriend', methods = ['POST'])
 @cross_origin()
 def addFriend():
 
-    friends = json.loads(request.get_data().decode('utf-8'))
-    print(friends, file=sys.stderr)
-    db.db.collection.insert_one(friends)
+    #should be logged in
+    if session.get('logged_in'):  
+        print("loggedin", file=sys.stderr)
+        
 
-    x =  '{ "name":"John", "age":30, "city":"New York"}'
+    else:
+        print("not logged in :( ", file=sys.stderr)
+        friends = json.loads(request.get_data().decode('utf-8'))
+        db.db.collection.insert_one(friends)
+    friends = json.loads(request.get_data().decode('utf-8'))
+    print(type(friends), file=sys.stderr)    
+    print(friends, file=sys.stderr)
+
+
+    x =  '{ "name":"addfriend"}'
     y = json.loads(x)
     return y
 
