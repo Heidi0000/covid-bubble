@@ -10,6 +10,7 @@ from flask_pymongo import pymongo
 from functools import wraps
 from bson.json_util import dumps,loads
 from flask_session import Session
+import graph.graph
 
 # Decorator
 
@@ -67,6 +68,11 @@ def signUp():
 def signIn():
     save = User().signIn(db)
     print(f"{session} here6 ", file=sys.stderr)
+    
+    gr, nd = graph.graph.getGraph(db, USER['user']["email"])
+    print(gr, file=sys.stderr) 
+    print(nd, file=sys.stderr)
+
     return save
 
 
@@ -95,7 +101,8 @@ def addFriend():
     friends = json.loads(request.get_data().decode('utf-8'))
     friend_arr = []
     for friend in friends:
-        friend_arr.append(friends[friend])
+        if friend != "":
+            friend_arr.append(friends[friend])
     print(type(friends), file=sys.stderr)    
     print(friend_arr, file=sys.stderr)
     
