@@ -4,9 +4,11 @@ import sys
 from bson.json_util import dumps,loads
 
 class User:
-    def startSession(self,user):
+    def startSession(self,user): 
+        session.permanent = True
         session['logged_in'] = True
         session['user'] = json.loads(dumps(user))
+        print(f"{session} here4 ", file=sys.stderr)
         return json.loads(dumps(user)), 200
 
     def signIn(self, db):
