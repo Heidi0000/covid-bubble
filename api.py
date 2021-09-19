@@ -32,6 +32,7 @@ from user.models import User
 @app.route('/time')
 def get_current_time():
     return {'time': time.time()}
+
     
 @app.route('/api', methods = ['GET'])
 @cross_origin()
@@ -61,11 +62,26 @@ def signIn():
 @login_required
 def mainpage():
     return send_from_directory(app.static_folder, 'index.html')
+@app.route('/addfriend', methods = ['POST'])
+@cross_origin()
+def addFriend():
+
+    friends = json.loads(request.get_data().decode('utf-8'))
+    print(friends, file=sys.stderr)
+    db.db.collection.insert_one(friends)
+
+    x =  '{ "name":"John", "age":30, "city":"New York"}'
+    y = json.loads(x)
+    return y
+
 
 @app.route('/')
 @cross_origin()
 def serve():
     return send_from_directory(app.static_folder, 'index.html')
+
+
+
 
 if __name__=='__main__':
     app.run()

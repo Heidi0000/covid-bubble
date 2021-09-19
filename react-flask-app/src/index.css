@@ -25,6 +25,10 @@ code {
 
 body {
   font-family: nunito;
+  background-image: url("images/backgroundmaybe.PNG");
+  background-repeat: no-repeat;
+  background-size: cover;
+  backdrop-filter: blur(3px) opacity(0.8);
 }
 
 .container {
@@ -53,20 +57,25 @@ body {
   width: 40rem;
   height: 33rem;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-
+  background-color: white;
 }
-
+::placeholder{
+  color:rgb(168, 168, 168);
+}
 .login-container{
-  margin-top: 15%;
+  /* margin-top: 15%; */
 }
 .signup-header{
-  margin-bottom: 15px;
+  margin-bottom: 15%;
+
 }
 .signup-header h1{
+  margin-top: 12%;
   font-size: 45px;
 }
 .signup-header h2{
   margin-top: 8px;
+  display: inline;
 }
 .header {
   display: flex;
@@ -74,7 +83,11 @@ body {
   align-items: center;
   margin-bottom: 20px;
 }
+.cred-container{
+  margin-top: 4%;
+  margin-bottom: 4%;
 
+}
 .btn {
   display: inline-block;
   background: #36A7F9;
@@ -98,7 +111,10 @@ body {
   transform: scale(0.98);
 }
 
-
+.link{
+  color:#36A7F9;
+  text-decoration: underline;
+}
 
 .add-form {
   margin-bottom: 40px;
@@ -125,6 +141,8 @@ body {
 
 .form-control-check {
   width: 57%;
+  height: 3rem;
+  margin: auto;
 }
 
 .form-control-check label {
@@ -142,4 +160,53 @@ body {
 footer {
   margin-top: 30px;
   text-align: center;
+}
+
+.add-friends-header{
+  /* background-color: red; */
+  width:75%;
+
+  margin: auto;
+  margin-top: 10%;
+  margin-bottom:5%;
+}
+.add-friends-header h1{
+  /* margin-bottom:50%; */
+
+}
+.add-friend-form{
+   /* width: 57%;
+  height: 43px;
+  margin: auto; 
+  margin-top: 17px;
+  padding: 3px 7px;
+  font-size: 17px;
+  background-color:red;  */
+
+}
+.add-friend-form input{
+  width: 57%;
+  height: 43px;
+  /* margin: 5px; */
+  margin-bottom: 17px;
+  padding: 3px 7px;
+  font-size: 17px;
+  border-style:none;
+  border-bottom: 1px solid rgb(168, 168, 168);
+
+}
+.add-friend-form label{
+  width: 57%;
+  height: 43px;
+  /* margin: 5px; */
+  margin-bottom: 17px;
+  padding: 3px 7px;
+  font-size: 17px;
+  border-style:none;
+}
+
+.add-friend-form input:focus{
+  outline:none;
+  border-bottom: 1px solid;
+
 }

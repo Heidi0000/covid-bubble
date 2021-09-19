@@ -12,7 +12,7 @@ const Credentials = ({notEntered, setnotEntered}) => {
     const onSubmit = (e) => {
         e.preventDefault()
         console.log(name,email,password,remember)
-        const credentials = {name, email, password}
+        const credentials = {name, email,password}
         fetch(`${process.env.REACT_APP_TEST}/signup`,{
             method: 'POST',
             headers: {"Content-Type": "application/json"},
