@@ -4,13 +4,12 @@ import sys
 from bson.json_util import dumps,loads
 
 class User:
-    def startSession(self,user, USER): 
-        USER['logged_in'] = True
-        USER['user'] = json.loads(dumps(user))
-        print(f"{USER} here4 ", file=sys.stderr)
+    def startSession(self,user): 
+        session['logged_in'] = True
+        session['user'] = json.loads(dumps(user))
         return json.loads(dumps(user)), 200
 
-    def signIn(self, db, USER):
+    def signIn(self, db):
         userData = json.loads(request.get_data().decode('utf-8'))
         
         result = db.db.collection.find_one({"email":userData["email"]})
@@ -22,8 +21,8 @@ class User:
         print("sign yay", file=sys.stderr)
 
         print(user, file=sys.stderr)
-        return self.startSession(user, USER)
+        return self.startSession(user)
 
-    def signOut(self,USER):
-        USER.clear()
+    def signOut(self):
+        session.clear()
         return redirect('/')

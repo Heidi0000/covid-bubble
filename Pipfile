@@ -11,6 +11,8 @@ flask-cors = "*"
 flask-pymongo = "*"
 dnspython = "*"
 pymongo = "*"
+flask-session = "*"
+redis = "*"
 
 [dev-packages]
 
