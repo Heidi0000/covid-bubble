@@ -8,6 +8,7 @@ const Credentials = ({notEntered, setnotEntered}) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [remember, setRemember] = useState(false)
+    const [showPassword, setShowPassword] = useState(false)
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -21,6 +22,12 @@ const Credentials = ({notEntered, setnotEntered}) => {
     
         setnotEntered(!notEntered)
     }
+
+    const toggleFnc = (e) => {
+        e.preventDefault()
+        setShowPassword(!showPassword)
+    }
+
     return (
         <div className="cred-container">
             <form onSubmit={(onSubmit)}>
@@ -42,11 +49,12 @@ const Credentials = ({notEntered, setnotEntered}) => {
                 </div>
                 <div className='form-control'>
                     <input 
-                        type='text' 
+                        type={showPassword ? "text" : "password"} 
                         placeholder='Password' 
                         value={password} 
                         onChange={(e) => setPassword(e.target.value)}
                     />
+                    <button onClick={toggleFnc}>Show Password</button>
                 </div>
                 <div className='form-control-check'>
                     
