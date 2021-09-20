@@ -69,9 +69,7 @@ def signIn():
     save = User().signIn(db)
     print(f"{session} here6 ", file=sys.stderr)
     
-    gr, nd = graph.graph.getGraph(db, USER['user']["email"])
-    print(gr, file=sys.stderr) 
-    print(nd, file=sys.stderr)
+
 
     return save
 
@@ -92,6 +90,11 @@ def mainpage():
 @cross_origin(supports_credentials=True)
 def sessionReturn():
     print(f"{session} here ", file=sys.stderr)
+
+    gr, nd = graph.graph.getGraph(db, session['user']["email"])
+    print(gr, file=sys.stderr) 
+   
+
     return session['user']
 
 @app.route('/addfriend', methods = ['POST'])
