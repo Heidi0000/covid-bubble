@@ -5,6 +5,9 @@ const MainPage = () => {
     const [links_,setLinks] = useState([])
     const [name, setName] = useState([])
     const [recieved, setRecieved] = useState(false)
+    const handleNodeClick = (node) => {
+        console.log("forcegraph click on ",node)
+    }
 
     useEffect(() => {
         fetch(`${process.env.REACT_APP_TEST}/mainpage/session`)
@@ -19,7 +22,7 @@ const MainPage = () => {
     return (
         <div>
             <h1 style={{textAlign: "center"}}>{name}'s Social Bubble</h1>
-            {recieved &&<ForceGraph2D graphData={{nodes: nodes_, links: links_}} nodeId = "id" />}
+            {recieved &&<ForceGraph2D graphData={{nodes: nodes_, links: links_}} nodeId = "id" onNodeClick={handleNodeClick}/>}
         </div>
     )
 }
