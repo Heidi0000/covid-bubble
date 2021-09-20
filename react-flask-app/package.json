@@ -6,14 +6,24 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "@types/d3": "^7.0.0",
+    "@types/d3-force": "^3.0.3",
+    "bezier-js": "^4.1.1",
     "d3": "^7.0.2",
+    "d3-force": "^3.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-force-graph": "^1.41.7",
+    "react-icons": "^4.2.0",
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.0.1"
   },
+  "resolutions": {
+    "bezier-js": "4.0.3"
+  },
   "scripts": {
+    "preinstall": "npx npm-force-resolutions",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
