@@ -58,6 +58,7 @@ def index():
 def signUp():
 
     userData = json.loads(request.get_data().decode('utf-8'))
+    userData['friends'] = []
     db.db.collection.insert_one(userData)
 
     User().signIn(db)
