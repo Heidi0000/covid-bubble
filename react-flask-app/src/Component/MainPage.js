@@ -1,17 +1,23 @@
 import { useState, useEffect } from "react"
 import { ForceGraph2D } from 'react-force-graph'
 const MainPage = () => {
-    const test = {nodes:[{name: "Jane",id:"secret1"}, {name:"John", id:"secret2"}], links:[{source:"secret1",target:"secret2"}]};
-    const [data, setData] = useState({})
+    const [nodes_, setNodes] = useState([])
+    const [links_,setLinks] = useState([])
+    const [recieved, setRecieved] = useState(false)
+
     useEffect(() => {
         fetch(`${process.env.REACT_APP_TEST}/mainpage/session`)
         .then(response => response.json())
-        .then(data => console.log(data))
+        .then(data => {
+            setNodes(data.nodes)
+            setLinks(data.links)
+            setRecieved(true)
+        })
     }, [])
     return (
         <div>
             <h1>Mainpage</h1>
-            <ForceGraph2D graphData={test} nodeId = "id" />
+            {recieved &&<ForceGraph2D graphData={{nodes: nodes_, links: links_}} nodeId = "id" />}
         </div>
     )
 }

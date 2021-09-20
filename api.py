@@ -92,11 +92,11 @@ def mainpage():
 def sessionReturn():
     print(f"{session} here ", file=sys.stderr)
 
-    gr, nd = graph.graph.getGraph(db, session['user']["email"])
-    print(gr, file=sys.stderr) 
+    # gr, nd = graph.graph.getGraph(db, session['user']["email"])
+    # print(gr, file=sys.stderr) 
    
-
-    return session['user']
+    data = {"nodes":[{"name": "Jane","id":"secret1"}, {"name":"John", "id":"secret2"}], "links":[{"source":"secret1","target":"secret2"}]}
+    return data
 
 @app.route('/addfriend', methods = ['POST'])
 @cross_origin()
