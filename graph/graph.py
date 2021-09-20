@@ -30,16 +30,12 @@ class Node:
 
 def getGraph(db, userEmail):
     visited = []
-    graph = Graph()
     graph_dict = {}
     node_dict = {}
     recursiveFunct(visited, db, userEmail, graph_dict, node_dict)
     print("COMEE", graph_dict, file=sys.stderr)
     # print("COMEON", node_dict['heidi'].db_data.get('friends'), file=sys.stderr)
     # print("COMEON", node_dict['heidi'].db_data.get('email'), file=sys.stderr)
-
-    getD3Nodes(node_dict)
-    getD3Links(graph_dict, node_dict)
     return graph_dict, node_dict
 
 
@@ -83,20 +79,22 @@ def getD3Nodes(node_dict):
     print("sdf")
     nodes = []
     for node in node_dict:
-        name = node
+        email = node
         if node_dict[node].db_data is None:
-            email = name + "NOEMAIL"
+            name = email
         else:
-            email = node_dict[node].db_data.get('email')
-
-        nodes.append({'name':name, 'email':email})
+            name = node_dict[node].db_data.get('name')
+        if (name == session["user"]["name"]):
+            nodes.append({'name':name, 'id':email, 'fillColor': '#ff5733', 'radiusSize':20})
+        else:
+            nodes.append({'name':name, 'id':email})
     return nodes
 
 
 def create_link(source, target, links):
     links.append({"source": source, "target":target})
 
-def getD3Links(graph_dict, node_dict):
+def getD3Links(graph_dict):
 
     link_dict = {}
     links = []

@@ -10,7 +10,7 @@ from flask_pymongo import pymongo
 from functools import wraps
 from bson.json_util import dumps,loads
 from flask_session import Session
-import graph.graph
+from graph.graph import getD3Links, getD3Nodes, getGraph
 
 # Decorator
 
@@ -92,11 +92,14 @@ def mainpage():
 def sessionReturn():
     print(f"{session} here ", file=sys.stderr)
 
-    # gr, nd = graph.graph.getGraph(db, session['user']["email"])
-    # print(gr, file=sys.stderr) 
+    gr, nd = getGraph(db, session['user']["email"])
    
-    data = {"nodes":[{"name": "Jane","id":"secret1"}, {"name":"John", "id":"secret2"}], "links":[{"source":"secret1","target":"secret2"}]}
+    data = {}
+    data["nodes"] = getD3Nodes(nd)
+    data["links"] = getD3Links(gr)
     data["user"] = session["user"]["name"]
+    with open('data.txt', 'w') as json_file:
+        json.dump(data,json_file)
     return data
 
 @app.route('/addfriend', methods = ['POST'])
