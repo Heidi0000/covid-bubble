@@ -106,8 +106,10 @@ def addFriend():
     friends = json.loads(request.get_data().decode('utf-8'))
     friend_arr = []
     for friend in friends:
-        if friend != "":
+        if friends[friend] != '':
             friend_arr.append(friends[friend])
+        else:
+            print("NO FRIENDS LOL", file=sys.stderr)
     print(type(friends), file=sys.stderr)    
     print(friend_arr, file=sys.stderr)
     
