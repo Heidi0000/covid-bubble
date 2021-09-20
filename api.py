@@ -96,6 +96,7 @@ def sessionReturn():
     # print(gr, file=sys.stderr) 
    
     data = {"nodes":[{"name": "Jane","id":"secret1"}, {"name":"John", "id":"secret2"}], "links":[{"source":"secret1","target":"secret2"}]}
+    data["user"] = session["user"]["name"]
     return data
 
 @app.route('/addfriend', methods = ['POST'])
