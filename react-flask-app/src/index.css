@@ -25,7 +25,7 @@ code {
 
 body {
   font-family: nunito;
-  background-image: url("images/backgroundmaybe.PNG");
+  /* background-image: url("images/backgroundmaybe.PNG"); */
   background-repeat: no-repeat;
   background-size: cover;
   backdrop-filter: blur(3px) opacity(0.8);
