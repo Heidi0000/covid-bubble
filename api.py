@@ -9,7 +9,6 @@ from flask.helpers import send_from_directory
 from flask_pymongo import pymongo
 from functools import wraps
 from bson.json_util import dumps,loads
-from flask_session import Session
 from graph.graph import getD3Links, getD3Nodes, getGraph
 
 # Decorator
@@ -18,11 +17,6 @@ from graph.graph import getD3Links, getD3Nodes, getGraph
 app = Flask(__name__, static_folder ='react-flask-app/build', static_url_path='')
 
 app.secret_key = "zxcvjklasdkljsadfjknwehjk"
-app.config['SESSION_TYPE'] = 'redis'
-app.config['SESSION_PERMANENT'] = False
-app.config['SESSION_USE_SIGNER'] = False
-app.config['SESSION_REDIS'] = redis.from_url('redis://:R1hs9IFjmTNv75Ow9MdHgzMOgcNnQ3Yq@redis-13776.c282.east-us-mz.azure.cloud.redislabs.com:13776')
-sess = Session(app)
 cors = CORS(app)
 
 CONNECTION_STRING = 'mongodb+srv://Billy:billypassword@cluster0.d2o1j.mongodb.net/mydb?retryWrites=true&w=majority'
@@ -69,9 +63,6 @@ def signUp():
 def signIn():
     save = User().signIn(db)
     print(f"{session} here6 ", file=sys.stderr)
-    
-
-
     return save
 
 
