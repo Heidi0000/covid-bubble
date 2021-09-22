@@ -26,4 +26,5 @@ class User:
 
     def signOut(self):
         session.clear()
+        print("CLEARED SESSIONS", file=sys.stderr)
         return redirect('/')

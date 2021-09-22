@@ -18,7 +18,6 @@ from flask_session import Session
 app = Flask(__name__, static_folder ='react-flask-app/build', static_url_path='')
 
 redis_url = 'redis://redistogo:ba08d61dfac2c0829497d77aa6bc3788@crestfish.redistogo.com:10285/'
-
 app.secret_key = "zxcvjklasdkljsadfjknwehjk"
 cors = CORS(app)
 app.config['SESSION_TYPE'] = 'redis'
@@ -139,9 +138,8 @@ def getsession():
 @cross_origin()
 def serve():
     session.clear()
+    print("CLEARED SESSIONS", file=sys.stderr)
     return send_from_directory(app.static_folder, 'index.html')
-
-
 
 
 if __name__=='__main__':
