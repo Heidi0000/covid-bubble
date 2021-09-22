@@ -1,5 +1,8 @@
 import { useState } from "react"
 import { Redirect } from "react-router-dom"
+// import { FontAwesomeIcon } from '@fontawesome/react-fontawesome'
+import { Link } from 'react-router-dom';
+
 
 const Login = ({signIn,setSignIn}) => {
     const [email, setEmail] = useState('')
@@ -30,7 +33,10 @@ const Login = ({signIn,setSignIn}) => {
     }
 
     return (
-        <div>
+        
+        <div className="signup-header">
+            <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
             <h1>Log in</h1>
             <div className="cred-container">
                 
@@ -43,15 +49,25 @@ const Login = ({signIn,setSignIn}) => {
                         onChange={(e) => setEmail(e.target.value)} 
                     />
                 </div>
-               
+
                 <div className='form-control'>
+
                     <input 
                         type={showPassword ? "text" : "password"} 
                         placeholder='Password' 
                         value={password} 
                         onChange={(e) => setPassword(e.target.value)}
+                        
                     />
-                    <button onClick={toggleFnc}>Show Password</button>
+                    {showPassword?
+                    <button  className='show-password-btn' onClick={toggleFnc} 
+                    style={{background: "url('https://img.icons8.com/material-outlined/24/000000/closed-eye.png')"}}
+                    ></button>
+                    :<button  className='show-password-btn' onClick={toggleFnc}
+                    style={{background: "url('https://img.icons8.com/material-outlined/24/000000/visible--v2.png')"}}
+                    ></button>
+                    }
+
                 </div>
 
                 <div className='form-control-check'>
@@ -62,6 +78,7 @@ const Login = ({signIn,setSignIn}) => {
                         value={remember} 
                         onChange={(e) => setRemember(e.currentTarget.checked)}
                     /><label>Remember me</label>
+
                 </div>
                 <input type='submit' value='Sign in' className='btn btn-block' />
             </form>

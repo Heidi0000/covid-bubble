@@ -27,7 +27,6 @@ const Credentials = ({notEntered, setnotEntered}) => {
         e.preventDefault()
         setShowPassword(!showPassword)
     }
-
     return (
         <div className="cred-container">
             <form onSubmit={(onSubmit)}>
@@ -54,7 +53,15 @@ const Credentials = ({notEntered, setnotEntered}) => {
                         value={password} 
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <button onClick={toggleFnc}>Show Password</button>
+                    {showPassword?
+                    <button  className='show-password-btn' onClick={toggleFnc} 
+                    style={{background: "url('https://img.icons8.com/material-outlined/24/000000/closed-eye.png')"}}
+                    ></button>
+                    :<button  className='show-password-btn' onClick={toggleFnc}
+                    style={{background: "url('https://img.icons8.com/material-outlined/24/000000/visible--v2.png')"}}
+                    ></button>
+                    }
+
                 </div>
                 <div className='form-control-check'>
                     
