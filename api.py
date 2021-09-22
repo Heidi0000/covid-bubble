@@ -1,16 +1,24 @@
 import time
 import sys
 import json
+from flask_jwt_extended.jwt_manager import JWTManager
 import redis
 
 from flask_cors import CORS, cross_origin
-from flask import Flask, request, session, redirect, render_template
+from flask import Flask, request, session, redirect, render_template, jsonify
 from flask.helpers import send_from_directory
 from flask_pymongo import pymongo
 from functools import wraps
 from bson.json_util import dumps,loads
 from graph.graph import getD3Links, getD3Nodes, getGraph
 from flask_session import Session
+
+# REACT Login fix
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+from flask_jwt_extended import JWTManager
+
 
 # Decorator
 
@@ -25,6 +33,11 @@ app.config['SESSION_PERMANENT'] = False
 app.config['SESSION_USE_SIGNER'] = True
 app.config['SESSION_REDIS'] = redis.from_url(redis_url)
 Session(app)
+
+
+app.config["JWT_SECRET_KEY"] = "asdfnwpowppwpqpasdfasdfasewqhgqhq"
+jwt = JWTManager(app)
+
 
 CONNECTION_STRING = 'mongodb+srv://Billy:billypassword@cluster0.d2o1j.mongodb.net/mydb?retryWrites=true&w=majority'
 client = pymongo.MongoClient(CONNECTION_STRING, connect=False)
@@ -61,16 +74,17 @@ def signUp():
     userData = json.loads(request.get_data().decode('utf-8'))
     userData['friends'] = []
     db.db.collection.insert_one(userData)
-
-    User().signIn(db)
-    return session["user"]
+    data = {}
+    data["token"] =  User().signIn(db)
+    data["testotherfield"] = "testing"
+    return data
 
 @app.route('/signin', methods = ['POST'])
 @cross_origin()
 def signIn():
     save = User().signIn(db)
-    print(f"{session} here6 ", file=sys.stderr)
-    return save
+    print(f"{save} here6 ", file=sys.stderr)
+    return jsonify(access_token=save)
 
 
 @app.route('/signout')
@@ -81,28 +95,33 @@ def signOut():
 
 @app.route('/mainpage',methods=['GET'])
 @cross_origin(supports_credentials=True)
-@login_required
 def mainpage():
     return ('',204)
 
 @app.route('/mainpage/session',methods=['GET'])
 @cross_origin(supports_credentials=True)
+@jwt_required()
 def sessionReturn():
-    print(f"{session} here ", file=sys.stderr)
 
-    gr, nd = getGraph(db, session['user']["email"])
-   
-    data = {}
-    data["nodes"] = getD3Nodes(nd)
-    data["links"] = getD3Links(gr)
-    data["user"] = session["user"]["name"]
-    with open('data.txt', 'w') as json_file:
-        json.dump(data,json_file)
-    return data
+    email = get_jwt_identity()
+    gr, nd = getGraph(db, email)
+
+    filter = {"email" : email}
+    db_data= json.loads(dumps(db.db.collection.find_one(filter)))
+    if (db_data):
+        userName = db_data.get('name')
+        data = {}
+        data["nodes"] = getD3Nodes(nd, userName)
+        data["links"] = getD3Links(gr)
+        data["user"] = userName
+        with open('data.txt', 'w') as json_file:
+            json.dump(data,json_file)
+        return data
+    else:
+        return ('',403)
 
 @app.route('/addfriend', methods = ['POST'])
 @cross_origin()
-@login_required
 def addFriend():
     friends = json.loads(request.get_data().decode('utf-8'))
     friend_arr = []

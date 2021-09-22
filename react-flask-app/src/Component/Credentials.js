@@ -1,5 +1,6 @@
 import { useState } from "react"
-
+import { Context } from "./Store/appContext";
+import { useContext } from "react";
 const {REACT_APP_TEST} = process.env;
 
 
@@ -9,18 +10,16 @@ const Credentials = ({notEntered, setnotEntered}) => {
     const [password, setPassword] = useState('')
     const [remember, setRemember] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
+    const {store, actions} = useContext(Context)
+    const token = sessionStorage["token"];
 
     const onSubmit = (e) => {
         e.preventDefault()
         console.log(name,email,password,remember)
-        const credentials = {name, email,password}
-        fetch(`${process.env.REACT_APP_TEST}/signup`,{
-            method: 'POST',
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(credentials)
-        }).then(response => response.json()).then(data => console.log(data))
-    
-        setnotEntered(!notEntered)
+        actions.signup(name,email,password).then(()=>{
+            console.log("SETING NOTENTERED TO FALSE")
+            setnotEntered(false)
+        })
     }
 
     const toggleFnc = (e) => {
