@@ -94,28 +94,33 @@ def signOut():
 
 @app.route('/mainpage',methods=['GET'])
 @cross_origin(supports_credentials=True)
-@login_required
 def mainpage():
     return ('',204)
 
 @app.route('/mainpage/session',methods=['GET'])
 @cross_origin(supports_credentials=True)
+@jwt_required()
 def sessionReturn():
-    print(f"{session} here ", file=sys.stderr)
 
-    gr, nd = getGraph(db, session['user']["email"])
-   
-    data = {}
-    data["nodes"] = getD3Nodes(nd)
-    data["links"] = getD3Links(gr)
-    data["user"] = session["user"]["name"]
-    with open('data.txt', 'w') as json_file:
-        json.dump(data,json_file)
-    return data
+    email = get_jwt_identity()
+    gr, nd = getGraph(db, email)
+
+    filter = {"email" : email}
+    db_data= json.loads(dumps(db.db.collection.find_one(filter)))
+    if (db_data):
+        userName = db_data.get('name')
+        data = {}
+        data["nodes"] = getD3Nodes(nd, userName)
+        data["links"] = getD3Links(gr)
+        data["user"] = userName
+        with open('data.txt', 'w') as json_file:
+            json.dump(data,json_file)
+        return data
+    else:
+        return ('',403)
 
 @app.route('/addfriend', methods = ['POST'])
 @cross_origin()
-@login_required
 def addFriend():
     friends = json.loads(request.get_data().decode('utf-8'))
     friend_arr = []
