@@ -3,6 +3,10 @@ import json
 import sys
 from bson.json_util import dumps,loads
 
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+
 class User:
     def startSession(self,user): 
         session['logged_in'] = True
@@ -21,8 +25,8 @@ class User:
             if((userData["password"] != result["password"])):
                 print("signin failed", file=sys.stderr)
                 return jsonify("failed user"), 201
-        print(result, file=sys.stderr)
-        return self.startSession(result)
+        access_token = create_access_token(identity=userData["email"])
+        return jsonify(access_token=access_token)
 
     def signOut(self):
         session.clear()

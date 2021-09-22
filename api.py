@@ -1,6 +1,7 @@
 import time
 import sys
 import json
+from flask_jwt_extended.jwt_manager import JWTManager
 import redis
 
 from flask_cors import CORS, cross_origin
@@ -11,6 +12,13 @@ from functools import wraps
 from bson.json_util import dumps,loads
 from graph.graph import getD3Links, getD3Nodes, getGraph
 from flask_session import Session
+
+# REACT Login fix
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+from flask_jwt_extended import JWTManager
+
 
 # Decorator
 
@@ -25,6 +33,11 @@ app.config['SESSION_PERMANENT'] = False
 app.config['SESSION_USE_SIGNER'] = True
 app.config['SESSION_REDIS'] = redis.from_url(redis_url)
 Session(app)
+
+
+app.config["JWT_SECRET_KEY"] = "asdfnwpowppwpqpasdfasdfasewqhgqhq"
+jwt = JWTManager(app)
+
 
 CONNECTION_STRING = 'mongodb+srv://Billy:billypassword@cluster0.d2o1j.mongodb.net/mydb?retryWrites=true&w=majority'
 client = pymongo.MongoClient(CONNECTION_STRING, connect=False)
@@ -69,7 +82,7 @@ def signUp():
 @cross_origin()
 def signIn():
     save = User().signIn(db)
-    print(f"{session} here6 ", file=sys.stderr)
+    print(f"{save} here6 ", file=sys.stderr)
     return save
 
 
