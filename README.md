@@ -40,3 +40,4 @@ heroku local web -f Procfile.windows
 ```
 This will host the website on your localhost
 
+npm install flux@3.1.3

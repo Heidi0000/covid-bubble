@@ -1,34 +1,50 @@
 import { useState, useEffect } from "react"
 import { ForceGraph2D } from 'react-force-graph'
-const MainPage = () => {
+import { Link } from "react-router-dom"
+import { Context } from "./Store/appContext"
+import { useContext } from "react"
+import { Redirect, useHistory } from "react-router"
+
+const MainPage = ({setSignIn, signIn}) => {
+    const {store, actions} = useContext(Context)
     const [nodes_, setNodes] = useState([])
     const [links_,setLinks] = useState([])
     const [name, setName] = useState([])
     const [recieved, setRecieved] = useState(false)
- 
+    const [logout, setLogout] = useState(false)
+    const history = useHistory()
+
+    const logoutHandle = () => {
+        actions.logout();
+        setSignIn(false);
+        <Redirect to="/" />
+    }
+
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_TEST}/mainpage/session`)
-        .then(response => response.json())
-        .then(data => {
-            setName(data.user)
-            setNodes(data.nodes)
-            console.log(data.nodes)
+        if (signIn){
+            actions.getGraph(setNodes, setName ,setLinks).then(()=>{
+                setRecieved(true)
+            })
+        }
+    }, []);
 
-            setLinks(data.links)
-            console.log(data.links)
-
-            setRecieved(true)
-        })
-    }, [])
     return (
         <div>
-            {recieved ? 
+            {!store.token ? <Redirect to= "/" /> :
+              (recieved ? 
                 <div>
                     <h1 style={{textAlign: "center"}}>{name}'s Social Bubble</h1>
                     <ForceGraph2D graphData={{nodes: nodes_, links: links_}} nodeId = "id" />
+                    <button onClick={logoutHandle}> Sign Out </button>
                 </div>
-            : <h1 style={{textAlign: "center"}}>Loading...</h1>}
-        </div>
+                : 
+                <div>
+                    <h1 style={{textAlign: "center"}}>Loading...</h1>
+                </div>)
+            
+            }
+            
+        </div> 
     )
 }
 
