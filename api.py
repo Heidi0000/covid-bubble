@@ -10,14 +10,22 @@ from flask_pymongo import pymongo
 from functools import wraps
 from bson.json_util import dumps,loads
 from graph.graph import getD3Links, getD3Nodes, getGraph
+from flask_session import Session
 
 # Decorator
 
 
 app = Flask(__name__, static_folder ='react-flask-app/build', static_url_path='')
 
+redis_url = 'redis://redistogo:ba08d61dfac2c0829497d77aa6bc3788@crestfish.redistogo.com:10285/'
+
 app.secret_key = "zxcvjklasdkljsadfjknwehjk"
 cors = CORS(app)
+app.config['SESSION_TYPE'] = 'redis'
+app.config['SESSION_PERMANENT'] = False
+app.config['SESSION_USE_SIGNER'] = True
+app.config['SESSION_REDIS'] = redis.from_url(redis_url)
+Session(app)
 
 CONNECTION_STRING = 'mongodb+srv://Billy:billypassword@cluster0.d2o1j.mongodb.net/mydb?retryWrites=true&w=majority'
 client = pymongo.MongoClient(CONNECTION_STRING, connect=False)
