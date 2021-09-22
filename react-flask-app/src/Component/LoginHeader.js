@@ -2,15 +2,16 @@ import Credentials from "./Credentials"
 import Login from "./Login"
 import { useState } from "react"
 import AddFriend from "./AddFriend"
-
+import { Context } from "./Store/appContext"
+import { useContext } from "react"
 const addFriend = (friend) =>{
     console.log(friend)
   }
 
 const LoginHeader = ({signIn,setSignIn}) => {
-    const [notEntered, setnotEntered] = useState(true)
-    const [signIned, setSignIned] = useState(false)
-
+    const [notEntered, setnotEntered] = useState(true);
+    const [signIned, setSignIned] = useState(false);
+    const {store, actions} = useContext(Context);    
     const onClick = () => {
         setSignIned(true)
     }
@@ -19,7 +20,7 @@ const LoginHeader = ({signIn,setSignIn}) => {
     return (
         <div className="login-container">
 
-            {notEntered 
+            {!store.token
             ?
                 (signIned 
                 ? 

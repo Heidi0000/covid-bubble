@@ -69,6 +69,29 @@ const getState = ({ getStore, getActions, setStore }) => {
                 
             },
 
+			signup: async (name, email, password) => {
+				const opts = {
+					method: 'POST',
+					headers: {"Content-Type": "application/json"},
+					body: JSON.stringify({
+						name: name,
+						email: email,
+						password: password
+					})
+				};
+				const response = await fetch(`${process.env.REACT_APP_TEST}/signup`, opts);
+
+				if (response.status!==200){ 
+					alert('Incorrect Email or Password');
+					return false;
+				}
+				const data = await response.json();
+				console.log(data);
+				sessionStorage.setItem("token", data.token);
+				setStore({token: data.token});
+				return true;
+			},
+
 			getGraph: async (setNodes, setName, setLinks) => {
 				const store = getStore();
 				const opts = {

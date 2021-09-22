@@ -26,7 +26,7 @@ class User:
                 print("signin failed", file=sys.stderr)
                 return jsonify("failed user"), 201
         access_token = create_access_token(identity=userData["email"])
-        return jsonify(access_token=access_token)
+        return access_token
 
     def signOut(self):
         session.clear()

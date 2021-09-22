@@ -5,7 +5,7 @@ from flask_jwt_extended.jwt_manager import JWTManager
 import redis
 
 from flask_cors import CORS, cross_origin
-from flask import Flask, request, session, redirect, render_template
+from flask import Flask, request, session, redirect, render_template, jsonify
 from flask.helpers import send_from_directory
 from flask_pymongo import pymongo
 from functools import wraps
@@ -74,16 +74,17 @@ def signUp():
     userData = json.loads(request.get_data().decode('utf-8'))
     userData['friends'] = []
     db.db.collection.insert_one(userData)
-
-    User().signIn(db)
-    return session["user"]
+    data = {}
+    data["token"] =  User().signIn(db)
+    data["testotherfield"] = "testing"
+    return data
 
 @app.route('/signin', methods = ['POST'])
 @cross_origin()
 def signIn():
     save = User().signIn(db)
     print(f"{save} here6 ", file=sys.stderr)
-    return save
+    return jsonify(access_token=save)
 
 
 @app.route('/signout')
