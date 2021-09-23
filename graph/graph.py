@@ -75,9 +75,12 @@ recursive function(visited_array, db, userEmail)
 }
 '''
 
-def getD3Nodes(node_dict, userName):
+def getD3Nodes(node_dict, userName, db, email):
     print("sdf")
     nodes = []
+    filter = {"email" : email}
+    my_data= json.loads(dumps(db.db.collection.find_one(filter)))
+    my_emails = my_data.get('friends')
     for node in node_dict:
         email = node
         if node_dict[node].db_data is None:
@@ -85,9 +88,11 @@ def getD3Nodes(node_dict, userName):
         else:
             name = node_dict[node].db_data.get('name')
         if (name == userName):
-            nodes.append({'name':name, 'id':email, 'fillColor': '#ff5733', 'radiusSize':20})
-        else:
-            nodes.append({'name':name, 'id':email})
+            nodes.append({'name':name, 'id':email, 'group': 1})
+        elif email in my_emails:
+            nodes.append({'name':name, 'id':email, 'group': 2})
+        else:    
+            nodes.append({'name':name, 'id':email, 'group': 3})
     return nodes
 
 

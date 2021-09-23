@@ -111,7 +111,7 @@ def sessionReturn():
     if (db_data):
         userName = db_data.get('name')
         data = {}
-        data["nodes"] = getD3Nodes(nd, userName)
+        data["nodes"] = getD3Nodes(nd, userName=userName, db=db, email=email)
         data["links"] = getD3Links(gr)
         data["user"] = userName
         with open('data.txt', 'w') as json_file:
