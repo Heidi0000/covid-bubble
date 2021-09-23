@@ -1,4 +1,6 @@
 const getState = ({ getStore, getActions, setStore }) => {
+	console.log("IN GETSTAE")
+
 	return {
 		store: {
 			token: null,
@@ -91,8 +93,86 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({token: data.token});
 				return true;
 			},
+			getIsUserAddedByFriends: async (setEmailArray,  setFriendName1, setPresetFriend1
+				, setFriendName2, setPresetFriend2
+				, setFriendName3, setPresetFriend3
+				, setFriendName4, setPresetFriend4) => {
+				console.log("IN GET IS USER ADDED")
+				const store = getStore();
+				const opts = {
+					headers: {
+						"Authorization": "Bearer " + store.token
+					}
+				}
+				try {
+					const response = await fetch(`${process.env.REACT_APP_TEST}/loadAddFriend`, opts)
+					if (response.status!==200){ 
+						alert('idk what this error would be');
+						return false;
+					}
+					const data = await response.json();
+					console.log(data);
+					var emailArray = data.emails
+					setEmailArray(data.emails)
+					for ( let i = 0; i< emailArray.length; i++){
+						if (i ==0){
+							console.log("11111")
+						setFriendName1(emailArray[0]) ;
+						setPresetFriend1(true); 
+						}if (i ==1){
+							console.log("22222")
 
+							setFriendName2(emailArray[1]) ; 
+							setPresetFriend2(true); 
+
+						}if (i ==2){
+							console.log("33333")
+
+							setFriendName3(emailArray[2]) ; 
+						setPresetFriend3(true); 
+
+						}if (i ==3){
+							console.log("44444")
+
+							setFriendName4(emailArray[3]) ; 
+							setPresetFriend4(true); 
+						}
+            		}
+					
+					//hopefully this data is the list of gmails
+					return true;
+				}
+				catch (error){
+					console.error("ERROR get is user added by friends in flux")
+				}
+			},
+			addFriendsToDB: async (friends) => {
+				const store = getStore();
+				
+				const opts = {
+					method: 'POST',
+					headers: {"Content-Type": "application/json", "Authorization": "Bearer " + store.token},
+					body: JSON.stringify(friends)
+				};
+
+				try {
+					const response = await fetch(`${process.env.REACT_APP_TEST}/addfriend`, opts)
+					if (response.status!==200){ 
+						alert('idk what this error would be in add friends to db');
+						return false;
+					}
+					const data = await response.json();
+					console.log(data);
+					// setSignIn(true);
+					//hopefully this data is the list of gmails
+					return true;
+				}
+				catch (error){
+					console.error("ERROR add friends to db in flux")
+				}
+			},
 			getGraph: async (setNodes, setName, setLinks) => {
+				console.log("IN GET GRAPH?")
 				const store = getStore();
 				const opts = {
 					headers: {
@@ -127,6 +207,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			changeColor: (index, color) => {
 				//get the store
+				console.log("IN CHANGE OCLR?")
+
 				const store = getStore();
 
 				//we have to loop the entire demo array to look for the respective index

@@ -34,12 +34,11 @@ def getGraph(db, userEmail):
     node_dict = {}
     recursiveFunct(visited, db, userEmail, graph_dict, node_dict)
     print("COMEE", graph_dict, file=sys.stderr)
-    # print("COMEON", node_dict['heidi'].db_data.get('friends'), file=sys.stderr)
-    # print("COMEON", node_dict['heidi'].db_data.get('email'), file=sys.stderr)
     return graph_dict, node_dict
 
 
 def recursiveFunct(visited,db, userEmail, graph_dict, node_dict):
+    print("RECURSIVE USER",userEmail,  file=sys.stderr)
     if userEmail not in visited and userEmail != "" :
         visited.append(userEmail)
 
@@ -49,8 +48,8 @@ def recursiveFunct(visited,db, userEmail, graph_dict, node_dict):
         node_dict.update({userEmail : userNode} )
 
         if db_data:
-            print("FFF", userNode.db_data.get('name'), file=sys.stderr)
             userFriendsList = db_data.get('friends')
+            print("userFriendsList", userFriendsList, file=sys.stderr)
         else:
             userFriendsList = ""
         graph_dict.update({userEmail : userFriendsList})
@@ -121,5 +120,4 @@ def getD3Links(graph_dict):
             else:
                 create_link(user, friend,links)
                 link_dict[friend] = [user]
-    print(links, file=sys.stderr)
     return links
