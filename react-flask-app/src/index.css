@@ -229,3 +229,13 @@ footer {
   border-bottom: 1px solid;
 
 }
+
+.mainPageHeader button{
+  width:6%;
+  height:4.5%;
+  font-size: 20px;
+  margin:auto;
+  position:fixed;
+  right: 30px;
+  top:15px;
+}

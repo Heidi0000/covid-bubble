@@ -64,12 +64,12 @@ const Credentials = ({notEntered, setnotEntered}) => {
                 </div>
                 <div className='form-control-check'>
                     
-                    <input 
+                    {/* <input 
                         type='checkbox' 
                         checked = {remember}
                         value={remember} 
                         onChange={(e) => setRemember(e.currentTarget.checked)}
-                    /><label>Remember me</label>
+                    /><label>Remember me</label> */}
                 </div>
                 <input type='submit' value='Sign up' className='btn btn-block' />
             </form>

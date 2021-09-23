@@ -73,7 +73,7 @@ def signUp():
 
     userData = json.loads(request.get_data().decode('utf-8'))
     userData['friends'] = []
-    db.db.collection_test.insert_one(userData)
+    db.db.collection.insert_one(userData)
     data = {}
     data["token"] =  User().signIn(db)
     data["testotherfield"] = "testing"
@@ -97,7 +97,7 @@ def loadAddFriend():
 
 def check_for_user_friends(userEmail):
     filter = {"friends": {"$in": [userEmail]}}
-    col = db.db.collection_test
+    col = db.db.collection
 
     find_result = col.find(filter)
     ret = [] #list of of friends emails
@@ -143,7 +143,7 @@ def sessionReturn():
 
     gr, nd = getGraph(db, email)
     filter = {"email" : email}
-    db_data= json.loads(dumps(db.db.collection_test.find_one(filter)))
+    db_data= json.loads(dumps(db.db.collection.find_one(filter)))
     if (db_data):
         userName = db_data.get('name')
         data = {}
@@ -174,9 +174,9 @@ def addFriend():
     
     filter = {"email" : get_jwt_identity()}
     friends_to_add = {"$set": { 'friends' : friend_arr}}
-    db.db.collection_test.update_one(filter, friends_to_add)
+    db.db.collection.update_one(filter, friends_to_add)
     # result = db.db.collection.find_one({"email":USER['user']["email"]})
-    session['user'] = json.loads(dumps(db.db.collection_test.find_one(filter)))
+    session['user'] = json.loads(dumps(db.db.collection.find_one(filter)))
     x =  '{ "name":"addfriend"}'
     y = json.loads(x)
     return y

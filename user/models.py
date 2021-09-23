@@ -16,7 +16,7 @@ class User:
     def signIn(self, db):
         userData = json.loads(request.get_data().decode('utf-8'))
         print(userData, file=sys.stderr)
-        result = db.db.collection_test.find_one({"email":userData["email"]})
+        result = db.db.collection.find_one({"email":userData["email"]})
         print(result, file=sys.stderr)
         if result is None:
             print("signin failed", file=sys.stderr)

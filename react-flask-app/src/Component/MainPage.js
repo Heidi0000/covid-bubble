@@ -32,8 +32,11 @@ const MainPage = ({setSignIn, signIn}) => {
         <div>
             {!store.token ? <Redirect to= "/" /> :
               (recieved ? 
-                <div>
-                    <h1 style={{textAlign: "center"}}>{name}'s Social Bubble</h1><button className='btn btn-block' onClick={logoutHandle}> Sign Out </button>
+                <div className="mainPageContainer">
+                    <div className="mainPageHeader">
+                        <h1 style={{textAlign: "center"}}>{name}'s Social Bubble</h1>
+                        <button className='btn btn-block' onClick={logoutHandle}> Sign Out </button>
+                    </div>
                     <ForceGraph2D graphData={{nodes: nodes_, links: links_}} 
                         nodeId = "id" 
                         nodeColor= {node => 
