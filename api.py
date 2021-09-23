@@ -73,7 +73,7 @@ def signUp():
 
     userData = json.loads(request.get_data().decode('utf-8'))
     userData['friends'] = []
-    db.db.collection.insert_one(userData)
+    db.db.collection_test.insert_one(userData)
     data = {}
     data["token"] =  User().signIn(db)
     data["testotherfield"] = "testing"
@@ -83,9 +83,44 @@ def signUp():
 @cross_origin()
 def signIn():
     save = User().signIn(db)
-    print(f"{save} here6 ", file=sys.stderr)
     return jsonify(access_token=save)
 
+@app.route('/loadAddFriend',methods=['GET'])
+@cross_origin()
+@jwt_required()
+def loadAddFriend():    
+    userEmail = get_jwt_identity()
+    print("USEREMAIL",userEmail, file=sys.stderr)
+    data = {}
+    data["emails"] = check_for_user_friends(userEmail)
+    return data
+
+def check_for_user_friends(userEmail):
+    filter = {"friends": {"$in": [userEmail]}}
+    col = db.db.collection_test
+
+    find_result = col.find(filter)
+    ret = [] #list of of friends emails
+    if find_result:
+        
+        for i in find_result:
+            print(i.get("email"), file=sys.stderr)
+            ret.append(i.get("email"))
+        # somee=find_result.get("email")
+    else:
+        somee = ":((("
+        print(somee, file=sys.stderr)
+    print("RET IN API.PY", ret, file=sys.stderr)
+
+    return ret
+'''
+Here add:
+- New endpoint for Addfriend to run when entering the page
+- add @cross_origin(), @jwt_required() decorator
+- Use the token recieved from frontend to get email of the user
+- Use the email to identify the accounts that have already added you
+- Return the email in either array or seperate fields
+'''
 
 @app.route('/signout')
 @cross_origin()
@@ -104,10 +139,11 @@ def mainpage():
 def sessionReturn():
 
     email = get_jwt_identity()
-    gr, nd = getGraph(db, email)
+    print("EMAIL", email, file=sys.stderr)
 
+    gr, nd = getGraph(db, email)
     filter = {"email" : email}
-    db_data= json.loads(dumps(db.db.collection.find_one(filter)))
+    db_data= json.loads(dumps(db.db.collection_test.find_one(filter)))
     if (db_data):
         userName = db_data.get('name')
         data = {}
@@ -121,6 +157,7 @@ def sessionReturn():
         return ('',403)
 
 @app.route('/addfriend', methods = ['POST'])
+@jwt_required()
 @cross_origin()
 def addFriend():
     friends = json.loads(request.get_data().decode('utf-8'))
@@ -128,16 +165,18 @@ def addFriend():
     for friend in friends:
         if friends[friend] != '':
             friend_arr.append(friends[friend])
+            print(friends[friend], file=sys.stderr)
+
         else:
             print("NO FRIENDS LOL", file=sys.stderr)
     print(type(friends), file=sys.stderr)    
     print(friend_arr, file=sys.stderr)
     
-    filter = {"email" : session['user']["email"]}
+    filter = {"email" : get_jwt_identity()}
     friends_to_add = {"$set": { 'friends' : friend_arr}}
-    db.db.collection.update_one(filter, friends_to_add)
+    db.db.collection_test.update_one(filter, friends_to_add)
     # result = db.db.collection.find_one({"email":USER['user']["email"]})
-    session['user'] = json.loads(dumps(db.db.collection.find_one(filter)))
+    session['user'] = json.loads(dumps(db.db.collection_test.find_one(filter)))
     x =  '{ "name":"addfriend"}'
     y = json.loads(x)
     return y

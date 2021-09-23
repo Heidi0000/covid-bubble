@@ -16,7 +16,7 @@ const LoginHeader = ({signIn,setSignIn}) => {
         setSignIned(true)
     }
 
-  
+    console.log("does it at least comehere")
     return (
         <div className="login-container">
 
