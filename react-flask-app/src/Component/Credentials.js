@@ -53,10 +53,10 @@ const Credentials = ({notEntered, setnotEntered}) => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                     {showPassword?
-                    <button  className='show-password-btn' onClick={toggleFnc} 
+                    <button  type="button" className='show-password-btn' onClick={toggleFnc} 
                     style={{background: "url('https://img.icons8.com/material-outlined/24/000000/closed-eye.png')"}}
                     ></button>
-                    :<button  className='show-password-btn' onClick={toggleFnc}
+                    :<button  type="button" className='show-password-btn' onClick={toggleFnc}
                     style={{background: "url('https://img.icons8.com/material-outlined/24/000000/visible--v2.png')"}}
                     ></button>
                     }
