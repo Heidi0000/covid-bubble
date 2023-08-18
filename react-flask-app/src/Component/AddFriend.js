@@ -1,10 +1,6 @@
 import { Component, useState, useEffect } from "react"
 import { Context } from "./Store/appContext"
 import { useContext } from "react";
-import getIsUserAddedByFriends from "../Component/Store/flux";
-
-const {REACT_APP_TEST} = process.env;
-
 
 const AddFriend = ({onAdd, setSignIn}) => {
      const [friendName1, setFriendName1] = useState('')
@@ -23,48 +19,15 @@ const AddFriend = ({onAdd, setSignIn}) => {
     //  const token = sessionStorage["token"];
 
      useEffect(() => {
-        // var listOfFriendsAlreadyAdded = actions.getIsUserAddedByFriends().then(()=>console.log("yay"));
         actions.getIsUserAddedByFriends(setEmailArray, setFriendName1, setPresetFriend1
             , setFriendName2, setPresetFriend2
             , setFriendName3, setPresetFriend3
             , setFriendName4, setPresetFriend4
             ).then(() => {
-            console.log("yay")
             console.log("here is my email array", emailArray)
         });
-        // var emails = listOfFriendsAlreadyAdded.emails;
-        //  console.log(emails);
         
         console.log("^^in addfriend, list of friends pls");
-        //        console.log(typeof(emails));
-        if(emailArray) //emails
-        {
-            // for ( let i = 0; i< emailArray.length; i++){
-            //     if (i ==0){
-            //         console.log("11111")
-            //        setFriendName1(emailArray[0]) ;
-            //        setPresetFriend1(true); 
-            //     }if (i ==1){
-            //         console.log("22222")
-
-            //         setFriendName2(emailArray[1]) ; 
-            //         setPresetFriend2(true); 
-
-            //      }if (i ==2){
-            //         console.log("33333")
-
-            //         setFriendName3(emailArray[2]) ; 
-            //        setPresetFriend3(true); 
-
-            //      }if (i ==3){
-            //         console.log("44444")
-
-            //         setFriendName4(emailArray[3]) ; 
-            //         setPresetFriend4(true); 
-            //      }
-            // }
-        }
-
     }, []);
 
     // Here add:
@@ -78,7 +41,6 @@ const AddFriend = ({onAdd, setSignIn}) => {
 
         const friends = {friendName1, friendName2, friendName3, friendName4}
         console.log(friends)
-
 
         var AddFriendToDB = actions.addFriendsToDB(friends);
         setSignIn(AddFriendToDB);

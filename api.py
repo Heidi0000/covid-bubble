@@ -5,19 +5,21 @@ from flask_jwt_extended.jwt_manager import JWTManager
 import redis
 
 from flask_cors import CORS, cross_origin
-from flask import Flask, request, session, redirect, render_template, jsonify
+from flask import Flask, request, session, redirect, jsonify
 from flask.helpers import send_from_directory
 from flask_pymongo import pymongo
-from functools import wraps
-from bson.json_util import dumps,loads
-from graph.graph import getD3Links, getD3Nodes, getGraph
 from flask_session import Session
 
+from pymongo.server_api import ServerApi
+from functools import wraps
+from bson.json_util import dumps
+from graph.graph import getD3Links, getD3Nodes, getGraph
+
 # REACT Login fix
-from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
+
 
 
 # Decorator
@@ -38,11 +40,17 @@ Session(app)
 app.config["JWT_SECRET_KEY"] = "asdfnwpowppwpqpasdfasdfasewqhgqhq"
 jwt = JWTManager(app)
 
-
 CONNECTION_STRING = 'mongodb+srv://Billy:billypassword@cluster0.d2o1j.mongodb.net/mydb?retryWrites=true&w=majority'
-client = pymongo.MongoClient(CONNECTION_STRING, connect=False)
+client = pymongo.MongoClient(CONNECTION_STRING, server_api=ServerApi('1'))
 db = client.get_database('mydb')
-colll = pymongo.collection.Collection(db, 'people')
+
+#how check for connection
+try:
+    # Send a ping to confirm a successful connection
+    client.admin.command('ping')
+    print("Pinged your deployment. You successfully connected to MongoDB!")
+except Exception as e:
+    print(e)
 
 def login_required(f):
     @wraps(f)
@@ -70,10 +78,15 @@ def index():
 @app.route('/signup', methods = ['POST'])
 @cross_origin()
 def signUp():
-
     userData = json.loads(request.get_data().decode('utf-8'))
     userData['friends'] = []
-    db.db.collection.insert_one(userData)
+    CONNECTION_STRING = 'mongodb+srv://Billy:billypassword@cluster0.d2o1j.mongodb.net/mydb?retryWrites=true&w=majority'
+    client = pymongo.MongoClient(CONNECTION_STRING, server_api=ServerApi('1'))
+    db = client.get_database('mydb')
+    try:
+        db.db.collection.insert_one(userData)
+    except:
+        print("insert_one error")
     data = {}
     data["token"] =  User().signIn(db)
     data["testotherfield"] = "testing"
@@ -127,7 +140,6 @@ Here add:
 def signOut():
     return User().signOut()
 
-
 @app.route('/mainpage',methods=['GET'])
 @cross_origin(supports_credentials=True)
 def mainpage():
@@ -171,10 +183,13 @@ def addFriend():
             print("NO FRIENDS LOL", file=sys.stderr)
     print(type(friends), file=sys.stderr)    
     print(friend_arr, file=sys.stderr)
-    
+
     filter = {"email" : get_jwt_identity()}
     friends_to_add = {"$set": { 'friends' : friend_arr}}
-    db.db.collection.update_one(filter, friends_to_add)
+    try:
+        db.db.collection.update_one(filter, friends_to_add)
+    except:
+        print("update_one error")
     # result = db.db.collection.find_one({"email":USER['user']["email"]})
     session['user'] = json.loads(dumps(db.db.collection.find_one(filter)))
     x =  '{ "name":"addfriend"}'

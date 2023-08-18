@@ -158,6 +158,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					const response = await fetch(`${process.env.REACT_APP_TEST}/addfriend`, opts)
 					if (response.status!==200){ 
+						console.log(response.status, "response status");
 						alert('idk what this error would be in add friends to db');
 						return false;
 					}
