@@ -239,3 +239,6 @@ footer {
   right: 30px;
   top:15px;
 }
+.strike-thru{
+  text-decoration: line-through;
+}
