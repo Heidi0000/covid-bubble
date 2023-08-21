@@ -31,7 +31,6 @@ const Credentials = ({notEntered, setnotEntered}) => {
                     onChange={(e) => setName(e.target.value)} 
                 />
             </div>
-                
             <div className='user-input-form'>
                 <input className='user-text-input'
                     type='text' 
@@ -48,7 +47,6 @@ const Credentials = ({notEntered, setnotEntered}) => {
                     onChange={(e) => setPassword(e.target.value)}
                 />
             </div>
-
             <input type='submit' value='Sign up' className='main-button' />
             </form>
         </div>

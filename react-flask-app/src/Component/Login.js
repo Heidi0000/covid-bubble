@@ -17,9 +17,6 @@ const Login = ({signIn,setSignIn}) => {
             setSignIn(true)
         })
     };    
-    const onClick = () => {
-        setSignIn(false)
-    }
 
     if (store.token && store.token != "" && store.token != undefined) history.push("/mainpage");
 
@@ -28,7 +25,6 @@ const Login = ({signIn,setSignIn}) => {
             {(store.token && store.token != "" && store.token != undefined) ? <Redirect to="/mainpage"/> :
                 <div className="box-content-container">
                     <div  className="header-title">Sign in</div>
-                    {/* <div > */}
                         <form onSubmit={(onSubmit)}>
                             <div className='user-input-form'>
                                 <input className='user-text-input'
@@ -47,8 +43,6 @@ const Login = ({signIn,setSignIn}) => {
                                     onChange={(e) => setPassword(e.target.value)}    
                                 />
                             </div>
-                            <div className='form-control-check'>
-                            </div>
                             <input type='submit' value='Sign in' className='main-button' />
                             
                         </form>
@@ -60,8 +54,6 @@ const Login = ({signIn,setSignIn}) => {
                             <br></br>
                             Sign in with a <span className="highlight">sample account</span> to see Covid Bubble in action
                         </div>
-
-                    {/* </div> */}
                 </div>
             }
         </div>

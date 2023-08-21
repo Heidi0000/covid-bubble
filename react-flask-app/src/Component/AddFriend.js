@@ -68,7 +68,6 @@ const AddFriend = ({onAdd, setSignIn}) => {
             onChange={(e) => {setUserInput(e.currentTarget.value)}}/>
             <button onClick={handleAddFriend}></button>
            </div>
-           
             <input type='submit' value='View Bubble' className='main-button' />
        </form>
     )
