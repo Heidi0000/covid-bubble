@@ -1,6 +1,7 @@
 import { Component, useState, useEffect } from "react"
 import { Context } from "./Store/appContext"
 import { useContext } from "react";
+import { Scrollbar } from 'react-scrollbars-custom';
 
 const AddFriend = ({onAdd, setSignIn}) => {
     const [friendsList, setFriendsList] = useState([])
@@ -45,23 +46,30 @@ const AddFriend = ({onAdd, setSignIn}) => {
         setSignIn(AddFriendToDB);
     }
     return (
-       <form className='add-friend-container' onSubmit={onSubmit}>
-           <div className='add-friend-form'> 
+       <form className='box-content-container' onSubmit={onSubmit}>
+           <div className="friends-list-scroll-area">
+            <Scrollbar style={{  height: 120 }}>     
                 {friendsList.map(friend => {
                     return (
-                        <div id={friend.id}  key={friend.id + friend.name} className={friend.delete ? "strike-thru" : ""} 
-                            onClick={crossOutFriend}
-                        >
-                            {friend.name}
+                        <div id={friend.id}  key={friend.id + friend.name} 
+                        className={friend.delete ? "friend strike-thru" : "friend"} 
+                        onClick={crossOutFriend}>
+                            <span className="highlight">{friend.name}</span>
                         </div>
                     )
                 })}
-                <input value={userInput} type="text" placeholder="Add new friend"
-                    onChange={(e) => {setUserInput(e.currentTarget.value)}}
-                />
-                <button onClick={handleAddFriend} >Submit</button>
-            </div>
-            <input type='submit' value='Continue' className='btn btn-block' />
+            </Scrollbar>    
+           </div>
+           <div className="add-new-friend-header">
+                Add New Friend
+           </div>
+           <div className="user-input-form">
+           <input className="user-text-input" value={userInput} type="text" placeholder="Enter friend's email"
+            onChange={(e) => {setUserInput(e.currentTarget.value)}}/>
+            <button onClick={handleAddFriend}></button>
+           </div>
+           
+            <input type='submit' value='View Bubble' className='main-button' />
        </form>
     )
 }

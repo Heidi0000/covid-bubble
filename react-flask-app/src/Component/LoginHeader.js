@@ -4,6 +4,7 @@ import { useState } from "react"
 import AddFriend from "./AddFriend"
 import { Context } from "./Store/appContext"
 import { useContext } from "react"
+
 const addFriend = (friend) =>{
     console.log(friend)
   }
@@ -17,22 +18,27 @@ const LoginHeader = ({signIn,setSignIn}) => {
     }
 
     return (
-        <div className="login-container">
-
+        <div className="box-container">
             {!store.token
             ?
                 (signIned 
                 ? 
                     <Login signIn={signIn} setSignIn={setSignIn}/>
                 : 
-                <div className="signup-header">
-                    <h1>Create account</h1>
-                    <h2>Already have an account? </h2> <h2 className="link" onClick={onClick} style={{cursor: 'pointer'}}>Sign in</h2>
+                <div >
+                    <h1 className="header-title">Sign up</h1>
                     <Credentials notEntered={notEntered} setnotEntered={setnotEntered}/>
+                    <div className="login-paragraph">
+                        Already have an account? <span className="highlight" onClick={onClick}>Sign in</span>
+                        <br></br>
+                        <span className="or">or</span>
+                        <br></br>
+                        Sign in with a <span className="highlight">sample account</span> to see Covid Bubble in action
+                    </div>
                 </div>)
                 :
                 <div >
-                    <h1 className="add-friends-header">Add a maximum of 4 people to your Covid-19 social bubble</h1>
+                    <h1 className="header-title">Friends List</h1>                    
                     <AddFriend onAdd={addFriend} setSignIn={setSignIn}/>
                 </div>
             }

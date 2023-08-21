@@ -7,7 +7,7 @@ const LoginHeaderWrapper = ({signIn, setSignIn}) => {
     }
     return (
         <div>
-            <div className="loginBox">
+            <div className="section-box">
                 <LoginHeader signIn={signIn} setSignIn={setSignIn}/>
             </div>
         </div>

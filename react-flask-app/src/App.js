@@ -11,6 +11,9 @@ function App() {
   return (
       <Router>
         <div className = "container">
+          <div className='logo'>
+            Covid Bubble
+          </div>
           <div className = "content-wrapper">
             <Switch>
 

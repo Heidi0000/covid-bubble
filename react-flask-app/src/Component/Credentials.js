@@ -8,70 +8,48 @@ const Credentials = ({notEntered, setnotEntered}) => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [remember, setRemember] = useState(false)
-    const [showPassword, setShowPassword] = useState(false)
     const {store, actions} = useContext(Context)
     const token = sessionStorage["token"];
 
     const onSubmit = (e) => {
         e.preventDefault()
-        console.log(name,email,password,remember)
+        console.log(name,email,password)
         actions.signup(name,email,password).then(()=>{
             console.log("SETING NOTENTERED TO FALSE")
             setnotEntered(false)
         })
     }
 
-    const toggleFnc = (e) => {
-        e.preventDefault()
-        setShowPassword(!showPassword)
-    }
     return (
-        <div className="cred-container">
+        <div>
             <form onSubmit={(onSubmit)}>
-                <div className='form-control'>
-                    <input 
-                        type='text' 
-                        placeholder='Name' 
-                        value={name} 
-                        onChange={(e) => setName(e.target.value)} 
-                    />
-                </div>
-                <div className='form-control'>
-                    <input 
-                        type='text' 
-                        placeholder='Email' 
-                        value={email} 
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </div>
-                <div className='form-control'>
-                    <input 
-                        type={showPassword ? "text" : "password"} 
-                        placeholder='Password' 
-                        value={password} 
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    {showPassword?
-                    <button  type="button" className='show-password-btn' onClick={toggleFnc} 
-                    style={{background: "url('https://img.icons8.com/material-outlined/24/000000/closed-eye.png')"}}
-                    ></button>
-                    :<button  type="button" className='show-password-btn' onClick={toggleFnc}
-                    style={{background: "url('https://img.icons8.com/material-outlined/24/000000/visible--v2.png')"}}
-                    ></button>
-                    }
+            <div className="user-input-form">
+                <input className='user-text-input'
+                    type='text' 
+                    placeholder='Name' 
+                    value={name} 
+                    onChange={(e) => setName(e.target.value)} 
+                />
+            </div>
+                
+            <div className='user-input-form'>
+                <input className='user-text-input'
+                    type='text' 
+                    placeholder='Email' 
+                    value={email} 
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+            </div>
+                <div className='user-input-form'>
+                <input className='user-text-input'
+                    type="password"
+                    placeholder='Password' 
+                    value={password} 
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+            </div>
 
-                </div>
-                <div className='form-control-check'>
-                    
-                    {/* <input 
-                        type='checkbox' 
-                        checked = {remember}
-                        value={remember} 
-                        onChange={(e) => setRemember(e.currentTarget.checked)}
-                    /><label>Remember me</label> */}
-                </div>
-                <input type='submit' value='Sign up' className='btn btn-block' />
+            <input type='submit' value='Sign up' className='main-button' />
             </form>
         </div>
         

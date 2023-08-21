@@ -1,9 +1,6 @@
 import { useState } from "react"
-import { FaAcquisitionsIncorporated } from "react-icons/fa";
 import { Redirect } from "react-router-dom"
 import { Context } from "./Store/appContext";
-// import { FontAwesomeIcon } from '@fontawesome/react-fontawesome'
-import { Link } from 'react-router-dom';
 import { useHistory } from "react-router";
 import { useContext } from "react";
 
@@ -11,8 +8,6 @@ const Login = ({signIn,setSignIn}) => {
     const {store, actions} = useContext(Context)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [remember, setRemember] = useState(false);
-    const [showPassword, setShowPassword] = useState(false);
     const token = sessionStorage["token"];
     const history = useHistory()
 
@@ -21,27 +16,22 @@ const Login = ({signIn,setSignIn}) => {
         actions.login(email,password).then(()=>{
             setSignIn(true)
         })
-    };
-
-    const toggleFnc = (e) => {
-        e.preventDefault()
-        setShowPassword(!showPassword)
-    };
+    };    
+    const onClick = () => {
+        setSignIn(false)
+    }
 
     if (store.token && store.token != "" && store.token != undefined) history.push("/mainpage");
 
     return (
         <div>
             {(store.token && store.token != "" && store.token != undefined) ? <Redirect to="/mainpage"/> :
-                <div className="signup-header">
-                    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-
-                    <h1>Log in</h1>
-                    <div className="cred-container">
-                        
+                <div className="box-content-container">
+                    <div  className="header-title">Sign in</div>
+                    {/* <div > */}
                         <form onSubmit={(onSubmit)}>
-                            <div className='form-control'>
-                                <input 
+                            <div className='user-input-form'>
+                                <input className='user-text-input'
                                     type='text' 
                                     placeholder='Email' 
                                     value={email} 
@@ -49,39 +39,29 @@ const Login = ({signIn,setSignIn}) => {
                                 />
                             </div>
 
-                            <div className='form-control'>
-
-                                <input 
-                                    type={showPassword ? "text" : "password"} 
+                            <div className='user-input-form'>
+                                <input className='user-text-input'
+                                    type="password"
                                     placeholder='Password' 
                                     value={password} 
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    
+                                    onChange={(e) => setPassword(e.target.value)}    
                                 />
-                                {showPassword?
-                                <button type="button" className='show-password-btn' onClick={toggleFnc} 
-                                style={{background: "url('https://img.icons8.com/material-outlined/24/000000/closed-eye.png')"}}
-                                ></button>
-                                :<button type="button" className='show-password-btn' onClick={toggleFnc}
-                                style={{background: "url('https://img.icons8.com/material-outlined/24/000000/visible--v2.png')"}}
-                                ></button>
-                                }
-
                             </div>
-
                             <div className='form-control-check'>
-                                
-                                {/* <input 
-                                    type='checkbox' 
-                                    checked = {remember}
-                                    value={remember} 
-                                    onChange={(e) => setRemember(e.currentTarget.checked)}
-                                /><label>Remember me</label> */}
-
                             </div>
-                            <input type='submit' value='Sign in' className='btn btn-block' />
+                            <input type='submit' value='Sign in' className='main-button' />
+                            
                         </form>
-                    </div>
+                        
+                        <div className="login-paragraph">
+                            Don't have an account? <span className="highlight" onClick={history.goBack} >Sign up</span>
+                            <br></br>
+                            <span className="or">or</span>
+                            <br></br>
+                            Sign in with a <span className="highlight">sample account</span> to see Covid Bubble in action
+                        </div>
+
+                    {/* </div> */}
                 </div>
             }
         </div>
