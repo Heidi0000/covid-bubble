@@ -16,7 +16,7 @@ const LoginHeader = ({signIn,setSignIn}) => {
     const onClick = () => {
         setSignIned(true)
     }
-
+    console.log("does it come here??? ")
     return (
         <div className="box-container">
             {!store.token
@@ -38,7 +38,6 @@ const LoginHeader = ({signIn,setSignIn}) => {
                 </div>)
                 :
                 <div >
-                    <h1 className="header-title">Friends List</h1>                    
                     <AddFriend onAdd={addFriend} setSignIn={setSignIn}/>
                 </div>
             }

@@ -5,7 +5,7 @@ import { Scrollbar } from 'react-scrollbars-custom';
 
 const AddFriend = ({onAdd, setSignIn}) => {
     const [friendsList, setFriendsList] = useState([])
-    const [ userInput, setUserInput ] = useState('');
+    const [userInput, setUserInput] = useState('');
     const {store, actions} = useContext(Context)
 
     const handleAddFriend = (e) => {
@@ -42,10 +42,15 @@ const AddFriend = ({onAdd, setSignIn}) => {
     // - In the return statement, make a bool such that if friendName1 is not empty, put in friendName1 into the field, otherwise leave it blank
     const onSubmit = (e) => {
         e.preventDefault()
+        console.log("why notn here?");
         var AddFriendToDB = actions.addFriendsToDB(friendsList);
         setSignIn(AddFriendToDB);
     }
     return (
+        <div>
+            
+        <h1 className="header-title">Friends List</h1>                    
+
        <form className='box-content-container' onSubmit={onSubmit}>
            <div className="friends-list-scroll-area">
             <Scrollbar style={{  height: 120 }}>     
@@ -70,6 +75,8 @@ const AddFriend = ({onAdd, setSignIn}) => {
            </div>
             <input type='submit' value='View Bubble' className='main-button' />
        </form>
+       </div>
+
     )
 }
 

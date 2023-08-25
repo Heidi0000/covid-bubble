@@ -26,7 +26,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			syncTokenFromSessionStore: () => {
 				const token = sessionStorage.getItem("token");
-				console.log("App just loaded, syncing local sessionstorage")
+				console.log("App just loaded, syncing local sessionstorage", token)
 				if (token && token != "" && token != undefined) setStore({token: token});
 			},
 
@@ -52,7 +52,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                 try {
                     const response = await fetch(`${process.env.REACT_APP_TEST}/signin`, opts)
-
                     if (response.status!==200){ 
                         alert('Incorrect Email or Password');
                         return false;
@@ -87,6 +86,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					alert('Incorrect Email or Password');
 					return false;
 				}
+				console.log("ok so it comes here? and its fine?")
 				const data = await response.json();
 				console.log(data);
 				sessionStorage.setItem("token", data.token);
@@ -147,15 +147,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// 	}
 			// },
 			addFriendsToDB: async (friends) => {
+				console.log("so whats the matter here");
+				// syncTokenFromSessionStore();
 				const store = getStore();
+				console.log("friends", friends);
+
 				var friendsList = {};
 				var i = 1;
+				console.log("friends", friends);
 				friends.forEach((friend) => {
 					if(!friend.delete) {
 						friendsList[i] = friend.name;
 						i++;
 					}
 				});
+				console.log("22244", store.token);
+				console.log("is this the prob", friendsList)
+				// body: JSON.stringify({
+				// 	name: name,
+				// 	email: email,
+				// 	password: password
+				// })
 				const opts = {
 					method: 'POST',
 					headers: {"Content-Type": "application/json", "Authorization": "Bearer " + store.token},
@@ -164,11 +176,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				try {
 					const response = await fetch(`${process.env.REACT_APP_TEST}/addfriend`, opts)
-					if (response.status!==200){ 
-						console.log(response.status, "response status");
-						alert('idk what this error would be in add friends to db');
-						return false;
-					}
+					// if (response.status!==200){ 
+					// 	console.log(response.status, "response status");
+					// 	alert('idk what this error would be in add friends to db');
+					// 	return false;
+					// }
 					const data = await response.json();
 					console.log(data);
 					// setSignIn(true);

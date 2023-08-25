@@ -158,7 +158,6 @@ footer {
 
 .add-friends-header{
   width:75%;
-
   margin: auto;
   margin-top: 10%;
   margin-bottom:5%;
@@ -169,16 +168,6 @@ footer {
   text-align: left;
 }
 
-
-.mainPageHeader button{
-  width:6%;
-  height:4.5%;
-  font-size: 20px;
-  margin:auto;
-  position:fixed;
-  right: 30px;
-  top:15px;
-}
 
 /*login/signup*/
 .login-paragraph{
@@ -204,26 +193,44 @@ footer {
   margin: 7rem 17rem;
   text-align: center;
 }
+
 .landing-header{
   font-size: 2.2rem;
   font-weight: 700;
 }
+
 .landing-section-header{
   font-size: 1.3rem;
   font-weight: 700;
   padding: 4.5rem 0 2rem;
 }
+
 .landing-paragraph{
   color: var(--dark-grey);
   padding: 0 3rem;
 }
+
 .tool-image{
   height: 4rem;
   margin: 0 2rem;
 }
+
 .landing-buttons-container{
-  /* display:flex; */
   width: 50%;
   margin: auto;
   padding-top: 4rem;
+}
+
+/*main page*/
+.force-graph-container canvas {
+  height: 80vh !important;
+  width: 80vw !important;
+  margin: auto;
+}
+
+.mainpage-button-container{
+  width: 40rem; 
+  margin: auto; 
+  display: flex;
+  gap: 2rem;
 }

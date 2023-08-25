@@ -1,7 +1,6 @@
 import time
 import sys
 import json
-from flask_jwt_extended.jwt_manager import JWTManager
 import redis
 
 from flask_cors import CORS, cross_origin
@@ -20,20 +19,20 @@ from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 
-
-
 # Decorator
 
-
 app = Flask(__name__, static_folder ='react-flask-app/build', static_url_path='')
-
+CORS(app)
 redis_url = 'redis://redistogo:ba08d61dfac2c0829497d77aa6bc3788@crestfish.redistogo.com:10285/'
 app.secret_key = "zxcvjklasdkljsadfjknwehjk"
 cors = CORS(app)
 app.config['SESSION_TYPE'] = 'redis'
 app.config['SESSION_PERMANENT'] = False
 app.config['SESSION_USE_SIGNER'] = True
-app.config['SESSION_REDIS'] = redis.from_url(redis_url)
+# app.config['SESSION_REDIS'] = redis.from_url(redis_url)
+# so we need to actually run this but then it does everything so do we rlly need to..
+app.config['SESSION_REDIS'] = redis.from_url('redis://localhost:6379')
+
 Session(app)
 
 
@@ -169,27 +168,29 @@ def sessionReturn():
         return ('',403)
 
 @app.route('/addfriend', methods = ['POST'])
+@cross_origin(supports_credentials=True)
 @jwt_required()
-@cross_origin()
 def addFriend():
     friends = json.loads(request.get_data().decode('utf-8'))
+    print(friends, file=sys.stderr)
     friend_arr = []
-    for friend in friends:
-        if friends[friend] != '':
-            friend_arr.append(friends[friend])
-            print(friends[friend], file=sys.stderr)
-
+    for key, friendname in friends.items():
+        if friendname != '':
+            friend_arr.append(friendname)
+            print(friendname, file=sys.stderr)
         else:
-            print("NO FRIENDS LOL", file=sys.stderr)
+            print("NO FRIENDS its fine", file=sys.stderr)
     print(type(friends), file=sys.stderr)    
     print(friend_arr, file=sys.stderr)
 
     filter = {"email" : get_jwt_identity()}
     friends_to_add = {"$set": { 'friends' : friend_arr}}
     try:
+        print("updating db")
         db.db.collection.update_one(filter, friends_to_add)
     except:
         print("update_one error")
+    print("done updating db")
     # result = db.db.collection.find_one({"email":USER['user']["email"]})
     session['user'] = json.loads(dumps(db.db.collection.find_one(filter)))
     x =  '{ "name":"addfriend"}'
@@ -216,4 +217,4 @@ def serve():
 
 
 if __name__=='__main__':
-    app.run()
+    app.run(host="0.0.0.0", port=5000)
