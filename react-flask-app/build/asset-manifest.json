@@ -1,23 +1,26 @@
 {
   "files": {
-    "main.css": "/static/css/main.d197e14b.chunk.css",
-    "main.js": "/static/js/main.1b2ccb6a.chunk.js",
-    "main.js.map": "/static/js/main.1b2ccb6a.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.47a8874b.js",
-    "runtime-main.js.map": "/static/js/runtime-main.47a8874b.js.map",
-    "static/js/2.e94e3e95.chunk.js": "/static/js/2.e94e3e95.chunk.js",
-    "static/js/2.e94e3e95.chunk.js.map": "/static/js/2.e94e3e95.chunk.js.map",
-    "static/js/3.895a2863.chunk.js": "/static/js/3.895a2863.chunk.js",
-    "static/js/3.895a2863.chunk.js.map": "/static/js/3.895a2863.chunk.js.map",
+    "main.css": "/static/css/main.b78cca3e.chunk.css",
+    "main.js": "/static/js/main.c1d7411d.chunk.js",
+    "main.js.map": "/static/js/main.c1d7411d.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.407a13a8.js",
+    "runtime-main.js.map": "/static/js/runtime-main.407a13a8.js.map",
+    "static/js/2.4075ba26.chunk.js": "/static/js/2.4075ba26.chunk.js",
+    "static/js/2.4075ba26.chunk.js.map": "/static/js/2.4075ba26.chunk.js.map",
+    "static/js/3.1979457d.chunk.js": "/static/js/3.1979457d.chunk.js",
+    "static/js/3.1979457d.chunk.js.map": "/static/js/3.1979457d.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.d197e14b.chunk.css.map": "/static/css/main.d197e14b.chunk.css.map",
-    "static/js/2.e94e3e95.chunk.js.LICENSE.txt": "/static/js/2.e94e3e95.chunk.js.LICENSE.txt",
-    "static/media/index.css": "/static/media/Nunito-Light.abdadce6.ttf"
+    "static/css/main.b78cca3e.chunk.css.map": "/static/css/main.b78cca3e.chunk.css.map",
+    "static/js/2.4075ba26.chunk.js.LICENSE.txt": "/static/js/2.4075ba26.chunk.js.LICENSE.txt",
+    "static/media/flaskLogo.611b5611.svg": "/static/media/flaskLogo.611b5611.svg",
+    "static/media/mongodbLogo.bf804240.png": "/static/media/mongodbLogo.bf804240.png",
+    "static/media/pythonLogo.82efb64f.png": "/static/media/pythonLogo.82efb64f.png",
+    "static/media/reactLogo.8a6fc0a2.png": "/static/media/reactLogo.8a6fc0a2.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.47a8874b.js",
-    "static/js/2.e94e3e95.chunk.js",
-    "static/css/main.d197e14b.chunk.css",
-    "static/js/main.1b2ccb6a.chunk.js"
+    "static/js/runtime-main.407a13a8.js",
+    "static/js/2.4075ba26.chunk.js",
+    "static/css/main.b78cca3e.chunk.css",
+    "static/js/main.c1d7411d.chunk.js"
   ]
 }
