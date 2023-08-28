@@ -1,1 +1,1 @@
-{"nodes": [{"name": "222222", "id": "222222", "group": 1}, {"name": "kjhsdkj", "id": "kjhsdkj", "group": 2}, {"name": "kjsdhf", "id": "kjsdhf", "group": 2}], "links": [{"source": "222222", "target": "kjhsdkj"}, {"source": "222222", "target": "kjsdhf"}], "user": "222222"}
+{"nodes": [{"name": "sdkhkh", "id": "kshdkfhoh", "group": 1}, {"name": "skhkdfhkhsdkf", "id": "skhkdfhkhsdkf", "group": 2}, {"name": "sdkjfh", "id": "sdkjfh", "group": 2}], "links": [{"source": "kshdkfhoh", "target": "skhkdfhkhsdkf"}, {"source": "kshdkfhoh", "target": "sdkjfh"}], "user": "sdkhkh"}

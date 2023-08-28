@@ -51,7 +51,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 };
 
                 try {
-                    const response = await fetch(`${process.env.REACT_APP_TEST}/signin`, opts)
+                    const response = await fetch(`https://covid-bubble.onrender.com/signin`, opts)
                     if (response.status!==200){ 
                         alert('Incorrect Email or Password');
                         return false;
@@ -80,7 +80,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						password: password
 					})
 				};
-				const response = await fetch(`${process.env.REACT_APP_TEST}/signup`, opts);
+				const response = await fetch(`https://covid-bubble.onrender.com/signup`, opts);
 
 				if (response.status!==200){ 
 					alert('Incorrect Email or Password');
@@ -163,11 +163,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				});
 				console.log("22244", store.token);
 				console.log("is this the prob", friendsList)
-				// body: JSON.stringify({
-				// 	name: name,
-				// 	email: email,
-				// 	password: password
-				// })
 				const opts = {
 					method: 'POST',
 					headers: {"Content-Type": "application/json", "Authorization": "Bearer " + store.token},
@@ -175,7 +170,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				};
 
 				try {
-					const response = await fetch(`${process.env.REACT_APP_TEST}/addfriend`, opts)
+					const response = await fetch(`https://covid-bubble.onrender.com/addfriend`, opts)
 					// if (response.status!==200){ 
 					// 	console.log(response.status, "response status");
 					// 	alert('idk what this error would be in add friends to db');
@@ -200,7 +195,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				}
 				try {
-					const response = await fetch(`${process.env.REACT_APP_TEST}/mainpage/session`, opts)
+					const response = await fetch(`https://covid-bubble.onrender.com/mainpage/session`, opts)
 					if (response.status!==200){ 
 						alert('Error, no email found in the database');
 						return false;
