@@ -68,3 +68,16 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `yarn build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+For local development, 
+change REACT_TEST_APP in .env to localhost:5000
+then in root (covid-bubble/covid-bubble), pipenv shell - this will open pipenv
+then python api.py
+this will run the python BE on localhost:5000
+
+Then yarn start and then it will run FE on localhost:3000.
+
+Then when its done change the .env back to onrender.com 
+then run yarn build
+then push the whole thing (the build files)
+then on render, redeploy.

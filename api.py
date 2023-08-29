@@ -47,7 +47,7 @@ db = client.get_database('mydb')
 try:
     # Send a ping to confirm a successful connection
     client.admin.command('ping')
-    print("Pinged your deployment. You successfully connected to MongoDB!")
+    print("Pinged your deployment. You successfully connected to MongoDBb!")
 except Exception as e:
     print(e)
 
@@ -101,11 +101,20 @@ def signIn():
 @cross_origin()
 @jwt_required()
 def loadAddFriend():    
-    userEmail = get_jwt_identity()
-    print("USEREMAIL",userEmail, file=sys.stderr)
-    data = {}
-    data["emails"] = check_for_user_friends(userEmail)
-    return data
+    email = get_jwt_identity()
+    filter = {"email": email}
+    db_data = json.loads(dumps(db.db.collection.find_one(filter)))
+    userFriendsList=[]
+    if db_data:
+        userFriendsList = db_data.get('friends')
+        print(userFriendsList)
+    else:
+        print("aNOPE")
+    retString = ""
+    for friendEmail in userFriendsList:
+        retString += friendEmail + " "
+    print(retString)
+    return retString
 
 def check_for_user_friends(userEmail):
     filter = {"friends": {"$in": [userEmail]}}
@@ -148,7 +157,6 @@ def mainpage():
 @cross_origin(supports_credentials=True)
 @jwt_required()
 def sessionReturn():
-
     email = get_jwt_identity()
     print("EMAIL", email, file=sys.stderr)
 
@@ -196,11 +204,6 @@ def addFriend():
     x =  '{ "name":"addfriend"}'
     y = json.loads(x)
     return y
-
-# @app.route('/setsession')
-# def setsession():
-#     session['Username'] = 'Test'
-#     return f"Session set!"
 
 @app.route('/getsession')
 def getsession():

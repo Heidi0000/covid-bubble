@@ -7,7 +7,7 @@ import flaskLogo from "../images/flaskLogo.svg"
 const LandingPage = () => {
   const history = useHistory();
   const handleClick = () => {
-    history.push("/");
+    history.push("/login");
   }
     
   return (

@@ -11,19 +11,15 @@ const MainPage = ({setSignIn, signIn}) => {
     const [links_,setLinks] = useState([])
     const [name, setName] = useState([])
     const [recieved, setRecieved] = useState(false)
-    const [logout, setLogout] = useState(false)
     const history = useHistory()
 
     const logoutHandle = () => {
         actions.logout();
         setSignIn(false);
-        <Redirect to="/" />
+        <Redirect to="/login" />
     }
     const handleClick = () => {
-        // setSignIn(true);
-        console.log("token", store.token);
-        history.push("/editFriends")
-        // <Redirect to="/" />
+        history.push('/login', {params:true})
       }
 
     useEffect(() => {
@@ -36,10 +32,9 @@ const MainPage = ({setSignIn, signIn}) => {
 
     return (
         <div>
-            {!store.token ? <Redirect to= "/" /> :
+            {!store.token ? <Redirect to= "/login" /> :
               (recieved ? 
                 <div className="mainPageContainer">
-                        {/* <h1 style={{textAlign: "center"}}>{name}'s Social Bubble</h1> */}
                     <ForceGraph2D
                         graphData={{nodes: nodes_, links: links_}} 
                         nodeId = "id" 
@@ -54,17 +49,13 @@ const MainPage = ({setSignIn, signIn}) => {
                         nodeVal={node => Math.pow(node.group === 1 ? 1.25 : 1.15,3)}
                     />
                     <div className="mainpage-button-container">
-                    <button className='main-button' onClick={handleClick}> Edit Friends List</button>
-                    <button className='main-button' onClick={logoutHandle}> Sign Out </button>
-
-                        </div>
-                        
-
-                        
+                        <button className='main-button' onClick={handleClick}> Edit Friends List</button>
+                        <button className='main-button' onClick={logoutHandle}> Sign Out </button>
+                    </div>
                 </div>
                 : 
                 <div>
-                    <h1 style={{textAlign: "center"}}>Loading...</h1>
+                    <h3 style={{textAlign: "center"}}>Loading...</h3>
                 </div>)
             
             }

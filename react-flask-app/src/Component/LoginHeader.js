@@ -16,16 +16,16 @@ const LoginHeader = ({signIn,setSignIn}) => {
     const onClick = () => {
         setSignIned(true)
     }
-    console.log("does it come here??? ")
+
     return (
-        <div className="box-container">
+        <div >
             {!store.token
             ?
                 (signIned 
                 ? 
                     <Login signIn={signIn} setSignIn={setSignIn}/>
                 : 
-                <div >
+                <div className="box-container">
                     <h1 className="header-title">Sign up</h1>
                     <Credentials notEntered={notEntered} setnotEntered={setnotEntered}/>
                     <div className="login-paragraph">

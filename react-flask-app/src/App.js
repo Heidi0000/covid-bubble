@@ -15,22 +15,20 @@ function App() {
   return (
       <Router>
         <div className = "container">
-          <Link to="/landing" className='logo'>
+          <Link to="/" className='logo'>
             Covid Bubble
           </Link>
-          <div className = "content-wrapper">
+          <div>
             <Switch>
-
-            <Route exact path="/landing" component={() => (<LandingPage/>)}/>
-            <Route exact path="/" component={() => (<LoginHeaderWrapper signIn={signIn} setSignIn={setSignIn} />)}/>
-            <Route exact path="/mainpage" component={() => (<MainPage setSignIn={setSignIn} signIn= {signIn} />)}/>
-            <Route exact path="/editFriends" component={() => (<AddFriend onAdd={addFriend} setSignIn={setSignIn}/>)}/>
+              <Route exact path="/" component={() => (<LandingPage/>)}/>
+              <Route exact path="/login" component={() => (<LoginHeaderWrapper signIn={signIn} setSignIn={setSignIn} />)}/>
+              <Route exact path="/mainpage" component={() => (<MainPage setSignIn={setSignIn} signIn= {signIn} />)}/>
+              <Route exact path="/editFriends" component={() => (<AddFriend onAdd={addFriend} setSignIn={setSignIn}/>)}/>
             </Switch>
           </div>
         </div>
       </Router>
   )
-
 }
 
 
