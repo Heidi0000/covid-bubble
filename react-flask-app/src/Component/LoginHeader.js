@@ -23,7 +23,7 @@ const LoginHeader = ({signIn,setSignIn}) => {
             ?
                 (signIned 
                 ? 
-                    <Login signIn={signIn} setSignIn={setSignIn}/>
+                    <Login signIn={signIn} setSignIn={setSignIn} backToSignup={signIned} setBackToSignup={setSignIned}/>
                 : 
                 <div className="box-container">
                     <h1 className="header-title">Sign up</h1>

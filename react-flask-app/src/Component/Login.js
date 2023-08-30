@@ -4,7 +4,7 @@ import { Context } from "./Store/appContext";
 import { useHistory } from "react-router";
 import { useContext } from "react";
 
-const Login = ({signIn,setSignIn}) => {
+const Login = ({signIn,setSignIn, backToSignup,setBackToSignup}) => {
     const {store, actions} = useContext(Context)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -17,11 +17,15 @@ const Login = ({signIn,setSignIn}) => {
             setSignIn(true)
         })
     };    
+    const onBackToSignup = () => {
+        // signedin (in login header) = true -> login, false -> signup
+        setBackToSignup(false);
+    }
 
     if (store.token && store.token != "" && store.token != undefined) history.push("/mainpage");
 
     return (
-        <div>
+        <div className="box-container">
             {(store.token && store.token != "" && store.token != undefined) ? <Redirect to="/mainpage"/> :
                 <div className="box-content-container">
                     <div  className="header-title">Sign in</div>
@@ -48,7 +52,11 @@ const Login = ({signIn,setSignIn}) => {
                         </form>
                         
                         <div className="login-paragraph">
-                            Don't have an account? <span className="highlight" onClick={history.goBack} >Sign up</span>
+                            Don't have an account? <span className="highlight" 
+                            onClick={
+                                        onBackToSignup
+                            } 
+                            >Sign up</span>
                             <br></br>
                             <span className="or">or</span>
                             <br></br>
