@@ -55,7 +55,7 @@ const MainPage = ({setSignIn, signIn}) => {
                 </div>
                 : 
                 <div>
-                    <h3 style={{textAlign: "center"}}>Loading...</h3>
+                    <h3 className="loading">Loading...</h3>
                 </div>)
             
             }

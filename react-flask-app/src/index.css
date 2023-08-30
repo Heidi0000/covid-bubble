@@ -222,15 +222,21 @@ footer {
 }
 
 /*main page*/
-.force-graph-container canvas {
-  height: 80vh !important;
-  width: 80vw !important;
-  margin: auto;
-}
-
 .mainpage-button-container{
   width: 40rem; 
   margin: auto; 
   display: flex;
   gap: 2rem;
+}
+
+.force-graph-container{
+  height: 80vh !important;
+  width: 100vw !important;
+  overflow: hidden;
+  margin: auto;
+}
+
+.loading{
+  text-align: center;
+  margin-top: 20vh;
 }

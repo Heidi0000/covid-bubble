@@ -20,7 +20,7 @@ const AddFriend = ({onAdd, setSignIn}) => {
                 const existingFriendsList = friendsListString.split(' ');
                 let temp = friendsList;
                 existingFriendsList.map(friend => {
-                    temp.push({id: existingFriendsList.length + 1, name: friend, delete: false });
+                    temp.push({id: temp.length + 1, name: friend, delete: false });
                 });
                 setFriendsList(temp);
                 setRerender(!rerender);
@@ -50,7 +50,7 @@ const AddFriend = ({onAdd, setSignIn}) => {
 
     const addFriendToList = (userInput) => {
         let temp = friendsList;
-        temp.push({id: friendsList.length + 1, name: userInput, delete: false });
+        temp.push({id: temp.length + 1, name: userInput, delete: false });
         setFriendsList(temp);
     }
     //  const token = sessionStorage["token"];
