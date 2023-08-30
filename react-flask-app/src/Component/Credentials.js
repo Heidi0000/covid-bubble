@@ -14,10 +14,14 @@ const Credentials = ({notEntered, setnotEntered}) => {
     const onSubmit = (e) => {
         e.preventDefault()
         console.log(name,email,password)
-        actions.signup(name,email,password).then(()=>{
-            console.log("SETING NOTENTERED TO FALSE")
-            setnotEntered(false)
-        })
+        if (!name || !email || !password){
+            alert("Please fill in all fields");
+        } 
+        else{
+            actions.signup(name,email,password).then(()=>{
+                setnotEntered(false)
+            })
+        }
     }
 
     return (

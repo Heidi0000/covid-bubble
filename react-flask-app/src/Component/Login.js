@@ -13,9 +13,19 @@ const Login = ({signIn,setSignIn, backToSignup,setBackToSignup}) => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        actions.login(email,password).then(()=>{
-            setSignIn(true)
-        })
+        if (!email || !password){
+            alert("please fill in all fields");
+        }
+        else{
+            actions.login(email,password).then((response)=>{
+                if (response){
+                    setSignIn(true)
+                }
+                else {
+                    console.log("login unsuccessful");
+                }
+            })
+        }
     };    
     const onBackToSignup = () => {
         // signedin (in login header) = true -> login, false -> signup
@@ -53,9 +63,7 @@ const Login = ({signIn,setSignIn, backToSignup,setBackToSignup}) => {
                         
                         <div className="login-paragraph">
                             Don't have an account? <span className="highlight" 
-                            onClick={
-                                        onBackToSignup
-                            } 
+                            onClick={onBackToSignup} 
                             >Sign up</span>
                             <br></br>
                             <span className="or">or</span>
