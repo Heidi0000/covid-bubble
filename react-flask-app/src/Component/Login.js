@@ -1,15 +1,22 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Redirect } from "react-router-dom"
 import { Context } from "./Store/appContext";
 import { useHistory } from "react-router";
 import { useContext } from "react";
 
-const Login = ({signIn,setSignIn, backToSignup,setBackToSignup}) => {
+const Login = ({signIn,setSignIn, backToSignup,setBackToSignup, useSampleUSer, setuseSampleUSer}) => {
     const {store, actions} = useContext(Context)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const token = sessionStorage["token"];
     const history = useHistory()
+
+    useEffect(() => {
+        if (useSampleUSer){
+            fillInSampleUser();
+        }
+        useSampleUSer = false;
+    }, []);
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -27,9 +34,16 @@ const Login = ({signIn,setSignIn, backToSignup,setBackToSignup}) => {
             })
         }
     };    
+    
     const onBackToSignup = () => {
         // signedin (in login header) = true -> login, false -> signup
+        setuseSampleUSer(false)
         setBackToSignup(false);
+    }
+
+    const fillInSampleUser = () => {
+        setEmail('sample@sample.com');
+        setPassword('samplePassword');
     }
 
     if (store.token && store.token != "" && store.token != undefined) history.push("/mainpage");
@@ -68,7 +82,9 @@ const Login = ({signIn,setSignIn, backToSignup,setBackToSignup}) => {
                             <br></br>
                             <span className="or">or</span>
                             <br></br>
-                            Sign in with a <span className="highlight">sample account</span> to see Covid Bubble in action
+                            Sign in with a <span className="highlight"
+                            onClick={fillInSampleUser} 
+                            >sample account</span> to see Covid Bubble in action
                         </div>
                 </div>
             }

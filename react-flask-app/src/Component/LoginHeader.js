@@ -1,6 +1,6 @@
 import Credentials from "./Credentials"
 import Login from "./Login"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import AddFriend from "./AddFriend"
 import { Context } from "./Store/appContext"
 import { useContext } from "react"
@@ -13,8 +13,14 @@ const LoginHeader = ({signIn,setSignIn}) => {
     const [notEntered, setnotEntered] = useState(true);
     const [signIned, setSignIned] = useState(false);
     const {store, actions} = useContext(Context);    
+    const [fillInSampleUser, setFillInSampleUser] = useState(false);
     const onClick = () => {
         setSignIned(true)
+    }
+    
+    const onClickSample = () => {
+        setFillInSampleUser(true);
+        setSignIned(true);
     }
 
     return (
@@ -23,7 +29,9 @@ const LoginHeader = ({signIn,setSignIn}) => {
             ?
                 (signIned 
                 ? 
-                    <Login signIn={signIn} setSignIn={setSignIn} backToSignup={signIned} setBackToSignup={setSignIned}/>
+                    <Login signIn={signIn} setSignIn={setSignIn} 
+                    backToSignup={signIned} setBackToSignup={setSignIned} 
+                    useSampleUSer={fillInSampleUser} setuseSampleUSer={setFillInSampleUser} />
                 : 
                 <div className="box-container">
                     <h1 className="header-title">Sign up</h1>
@@ -33,7 +41,7 @@ const LoginHeader = ({signIn,setSignIn}) => {
                         <br></br>
                         <span className="or">or</span>
                         <br></br>
-                        Sign in with a <span className="highlight">sample account</span> to see Covid Bubble in action
+                        Sign in with a <span className="highlight" onClick={onClickSample}>sample account</span> to see Covid Bubble in action
                     </div>
                 </div>)
                 :
