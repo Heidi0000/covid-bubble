@@ -1,43 +1,30 @@
-# covid-bubble
+# Covid Bubble
 
-## Adding remote git
+## About Project
+Try Covid bubble [here](https://covid-bubble-app.onrender.com/)!
 
-Add remote git to the heroku server by running 
-```
-git remote add heroku https://git.heroku.com/covid19-bubble.git
-```
-This repo will be responsible for deploying the flask app on the web
+Covid Bubble is a web application built with Python, Flask, React, and MongoDB that allows the user to visualize their social bubbles through a force directed graph. This includes a login/sign-up page, edit friends' list page, and main page to retrieve the account information in a recursive fashion from MongoDB to display every profile that is connected to the user and their close contacts. 
+![Covid Bubble pages](image.png)
 
-## Commiting changes
+### Development
+For local development, change in .env
+ `REACT_TEST_APP` to `localhost:5000`
+Then in root (covid-bubble/covid-bubble), 
+```
+pipenv shell 
+python api.py
+```
+This will run the python BE on localhost:5000
 
-Remember to test the changes on locally first, and then push to the heroku git. 
-First, you must change the .env variable in react-flask-app to:
+Then in react-flask-app, 
+``` 
+yarn start
 ```
-REACT_APP_TEST = https://covid19-bubble.herokuapp.com
-```
-Then, build react again using
-```
-npm run build
-```
-After that, push to heroku by:
-```
-git push heroku main
-```
-Otherwise, update the origin main by using 
-```
-git push origin main
-```
+FE will run on localhost:3000 by default.
 
-## Running the server locally
-
-To run the server locally, first change the .env file in the react-flask-app directory to:
+Once all changes are goot to be pushed, change the `REACT_TEST_APP` back to onrender.com 
+then
 ```
-REACT_APP_TEST = http://localhost:5000
+yarn build
 ```
-Then, use the heroku command IN THE PIPENV SHELL:
-```
-heroku local web -f Procfile.windows
-```
-This will host the website on your localhost
-
-npm install flux@3.1.3
+Then on render, redeploy.
